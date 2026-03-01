@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CyberAgent — Centro de Ciberdefensa Local</title>
+  <meta name="description" content="CyberAgent: Tu escudo de ciberseguridad defensiva 100% local para Android. Monitorización en tiempo real, análisis de apps, blindaje de llamadas y SMS, y mucho más." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ══════════════════════════════════════════════
+       RESET & BASE
+    ══════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-void:    #060610;
+      --bg-deep:    #080812;
+      --bg-card:    #0D0D1F;
+      --bg-card2:   #12122A;
+      --bg-card3:   #1A1A2E;
+      --cyan:       #00E5FF;
+      --cyan-dim:   #00b8cc;
+      --purple:     #6C63FF;
+      --pink:       #C850C0;
+      --green:      #00E676;
+      --amber:      #FFAB40;
+      --red:        #FF5252;
+      --text-1:     #FFFFFF;
+      --text-2:     #C8D0E0;
+      --text-3:     #6A7890;
+      --border:     rgba(0,229,255,.12);
+      --glow-cyan:  0 0 40px rgba(0,229,255,.25);
+      --glow-purp:  0 0 40px rgba(108,99,255,.35);
+      --radius-sm:  12px;
+      --radius-md:  20px;
+      --radius-lg:  28px;
+      --transition: .3s cubic-bezier(.4,0,.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg-void);
+      color: var(--text-2);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    ::selection { background: rgba(0,229,255,.25); color: #fff; }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-deep); }
+    ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 99px; }
+
+    /* ══════════════════════════════════════════════
+       CANVAS PARTICLES (fondo)
+    ══════════════════════════════════════════════ */
+    #canvas-bg {
+      position: fixed; inset: 0;
+      z-index: 0; pointer-events: none;
+      opacity: .45;
+    }
+
+    /* ══════════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.5rem,5vw,4rem);
+      height: 68px;
+      background: rgba(8,8,18,.8);
+      backdrop-filter: blur(16px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: .6rem;
+      text-decoration: none;
+    }
+    .nav-logo .shield-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg,var(--purple),var(--cyan));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: var(--glow-purp);
+    }
+    .nav-logo span {
+      font-size: 1.1rem; font-weight: 800;
+      color: var(--text-1);
+      letter-spacing: -.02em;
+    }
+    .nav-logo span em {
+      color: var(--cyan); font-style: normal;
+    }
+
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-3);
+      font-size: .875rem; font-weight: 500;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--cyan); }
+
+    .nav-cta {
+      background: linear-gradient(135deg,var(--purple),var(--cyan));
+      color: #fff !important;
+      padding: .45rem 1.1rem;
+      border-radius: 99px;
+      font-weight: 600 !important;
+      font-size: .85rem !important;
+      box-shadow: 0 0 20px rgba(108,99,255,.4);
+      transition: transform var(--transition), box-shadow var(--transition) !important;
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(108,99,255,.6) !important;
+      color: #fff !important;
+    }
+
+    /* hamburger */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text-2); border-radius: 99px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: fixed; top: 68px; left: 0; right: 0;
+        background: rgba(8,8,18,.97);
+        border-bottom: 1px solid var(--border);
+        padding: 1.5rem 2rem 2rem;
+        gap: 1.2rem;
+      }
+    }
+
+    /* ══════════════════════════════════════════════
+       SECTIONS COMMON
+    ══════════════════════════════════════════════ */
+    section { position: relative; z-index: 1; }
+
+    .container {
+      width: min(1140px, 92vw);
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .7rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      background: rgba(0,229,255,.08);
+      border: 1px solid rgba(0,229,255,.2);
+      padding: .35rem .85rem;
+      border-radius: 99px;
+      margin-bottom: 1.1rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem,4.5vw,3.2rem);
+      font-weight: 800;
+      color: var(--text-1);
+      letter-spacing: -.03em;
+      line-height: 1.15;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-3);
+      max-width: 560px;
+      margin-top: .75rem;
+      line-height: 1.7;
+    }
+
+    /* ══════════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 0 80px;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-actions { justify-content: center; }
+      .hero-visual { order: -1; }
+      .section-subtitle { margin: .75rem auto 0; }
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(0,229,255,.06);
+      border: 1px solid rgba(0,229,255,.2);
+      border-radius: 99px;
+      padding: .35rem 1rem;
+      font-size: .78rem;
+      color: var(--cyan);
+      font-weight: 600;
+      letter-spacing: .04em;
+      margin-bottom: 1.2rem;
+    }
+    .hero-badge .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:.5; transform:scale(1.4); }
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem,6vw,5rem);
+      font-weight: 900;
+      color: var(--text-1);
+      letter-spacing: -.04em;
+      line-height: 1.08;
+    }
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg,var(--purple) 0%,var(--cyan) 60%,var(--pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-3);
+      margin: 1.2rem 0 2rem;
+      max-width: 480px;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: linear-gradient(135deg,var(--purple),var(--cyan));
+      color: #fff;
+      font-size: 1rem; font-weight: 700;
+      padding: .85rem 2rem;
+      border-radius: 99px;
+      text-decoration: none;
+      box-shadow: 0 0 30px rgba(108,99,255,.5);
+      transition: transform var(--transition), box-shadow var(--transition);
+      border: none; cursor: pointer;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 6px 40px rgba(108,99,255,.7);
+    }
+    .btn-primary .btn-icon { font-size: 1.2rem; }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: transparent;
+      color: var(--text-2);
+      font-size: .95rem; font-weight: 600;
+      padding: .85rem 1.8rem;
+      border-radius: 99px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,.12);
+      transition: border-color var(--transition), color var(--transition), background var(--transition);
+    }
+    .btn-secondary:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: rgba(0,229,255,.06);
+    }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .hero-stat-item { }
+    .hero-stat-item .num {
+      font-size: 1.8rem; font-weight: 800;
+      color: var(--text-1); letter-spacing: -.03em;
+    }
+    .hero-stat-item .num span { color: var(--cyan); }
+    .hero-stat-item .label {
+      font-size: .75rem; color: var(--text-3); font-weight: 500;
+      letter-spacing: .03em;
+    }
+
+    /* Phone mockup */
+    .hero-visual {
+      display: flex; justify-content: center; align-items: center;
+      position: relative;
+    }
+
+    .phone-wrap {
+      position: relative;
+      width: 240px;
+      filter: drop-shadow(0 20px 60px rgba(108,99,255,.4));
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-18px); }
+    }
+
+    .phone-frame {
+      width: 240px; height: 490px;
+      background: linear-gradient(160deg,#1a1a3e,#0d0d1f);
+      border-radius: 38px;
+      border: 2px solid rgba(108,99,255,.4);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 0 6px rgba(108,99,255,.08),
+                  0 30px 80px rgba(0,0,0,.6),
+                  inset 0 1px 0 rgba(255,255,255,.06);
+    }
+
+    /* notch */
+    .phone-frame::before {
+      content: '';
+      position: absolute; top: 12px; left: 50%;
+      transform: translateX(-50%);
+      width: 60px; height: 6px;
+      background: rgba(255,255,255,.15);
+      border-radius: 99px; z-index: 10;
+    }
+
+    .phone-screen {
+      position: absolute; inset: 20px 8px 8px;
+      background: #080812;
+      border-radius: 26px;
+      overflow: hidden;
+      font-size: 7px;
+    }
+
+    .phone-topbar {
+      background: #12122A;
+      padding: 8px 10px 6px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .phone-app-name { color: #00E5FF; font-weight: 800; font-size: 8px; }
+    .phone-sub { color: #4A6080; font-size: 6px; }
+
+    .phone-card {
+      margin: 6px 8px;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 7px;
+    }
+    .phone-card.green { background: #1B5E20; border: 1px solid #2E7D32; }
+    .phone-card.dark  { background: #0F1425; border: 1px solid #1a1a3e; }
+
+    .phone-status { color: #fff; font-weight: 800; font-size: 9px; margin-bottom: 3px; }
+    .phone-info   { color: #80CBC4; font-size: 6px; }
+
+    .phone-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5px; margin: 6px 8px;
+    }
+    .phone-mini-card {
+      background: #0E0E22;
+      border-radius: 8px; padding: 7px;
+      border: 1px solid rgba(0,229,255,.1);
+    }
+    .phone-mini-icon { font-size: 10px; }
+    .phone-mini-label { color: #6FA8DC; font-size: 5px; margin-top: 2px; }
+    .phone-mini-val   { color: #fff; font-weight: 700; font-size: 8px; }
+
+    .phone-scan-bar {
+      margin: 4px 8px;
+      height: 3px;
+      background: #1a1a3e;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .phone-scan-fill {
+      height: 100%; width: 60%;
+      background: linear-gradient(90deg,var(--purple),var(--cyan));
+      border-radius: 99px;
+      animation: scan-anim 2.5s ease-in-out infinite alternate;
+    }
+    @keyframes scan-anim { from { width:15%; } to { width:85%; } }
+
+    /* glow orbs behind phone */
+    .orb {
+      position: absolute; border-radius: 50%;
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(108,99,255,.35) 0%, transparent 70%);
+      top: -40px; left: -30px;
+      animation: orb-drift 8s ease-in-out infinite;
+    }
+    .orb-2 {
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, rgba(0,229,255,.25) 0%, transparent 70%);
+      bottom: 0; right: -20px;
+      animation: orb-drift 10s ease-in-out infinite reverse;
+    }
+    @keyframes orb-drift {
+      0%,100% { transform: translate(0,0); }
+      50%     { transform: translate(20px,-20px); }
+    }
+
+    /* ══════════════════════════════════════════════
+       TRUST BAR
+    ══════════════════════════════════════════════ */
+    #trust-bar {
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,31,.5);
+    }
+
+    .trust-inner {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 2rem 3.5rem;
+    }
+
+    .trust-item {
+      display: flex; align-items: center; gap: .6rem;
+      color: var(--text-3);
+      font-size: .85rem; font-weight: 500;
+    }
+    .trust-item .icon {
+      font-size: 1.2rem; color: var(--cyan);
+    }
+
+    /* ══════════════════════════════════════════════
+       FEATURES
+    ══════════════════════════════════════════════ */
+    #features { padding: 100px 0; }
+
+    .features-header { text-align: center; margin-bottom: 4rem; }
+    .features-header .section-subtitle { margin: .75rem auto 0; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+      cursor: default;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg,rgba(108,99,255,.06),transparent 60%);
+      opacity: 0; transition: opacity var(--transition);
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0,229,255,.25);
+      box-shadow: 0 16px 40px rgba(0,0,0,.4), 0 0 0 1px rgba(0,229,255,.08);
+    }
+    .feature-card:hover::before { opacity: 1; }
+
+    /* accent corner glow */
+    .feature-card::after {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle at top right,var(--accent-color,.5) 0%,transparent 70%);
+      opacity: .12;
+    }
+
+    .feature-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.1rem;
+      position: relative; z-index: 1;
+    }
+
+    .feature-card h3 {
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--text-1); margin-bottom: .5rem;
+      position: relative; z-index: 1;
+    }
+    .feature-card p {
+      font-size: .875rem; line-height: 1.7;
+      color: var(--text-3); position: relative; z-index: 1;
+    }
+
+    .feature-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: .68rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .2rem .65rem;
+      border-radius: 99px;
+      position: relative; z-index: 1;
+    }
+
+    /* color variants */
+    .v-cyan  .feature-icon-wrap { background: rgba(0,229,255,.1); }
+    .v-purp  .feature-icon-wrap { background: rgba(108,99,255,.12); }
+    .v-pink  .feature-icon-wrap { background: rgba(200,80,192,.1); }
+    .v-green .feature-icon-wrap { background: rgba(0,230,118,.1); }
+    .v-amber .feature-icon-wrap { background: rgba(255,171,64,.1); }
+    .v-red   .feature-icon-wrap { background: rgba(255,82,82,.1); }
+
+    .v-cyan  .feature-tag { background:rgba(0,229,255,.08); color:var(--cyan); border:1px solid rgba(0,229,255,.2); }
+    .v-purp  .feature-tag { background:rgba(108,99,255,.08); color:var(--purple); border:1px solid rgba(108,99,255,.2); }
+    .v-pink  .feature-tag { background:rgba(200,80,192,.08); color:var(--pink); border:1px solid rgba(200,80,192,.2); }
+    .v-green .feature-tag { background:rgba(0,230,118,.08); color:var(--green); border:1px solid rgba(0,230,118,.2); }
+    .v-amber .feature-tag { background:rgba(255,171,64,.08); color:var(--amber); border:1px solid rgba(255,171,64,.2); }
+    .v-red   .feature-tag { background:rgba(255,82,82,.08); color:var(--red); border:1px solid rgba(255,82,82,.2); }
+
+    /* ══════════════════════════════════════════════
+       AI SECTION
+    ══════════════════════════════════════════════ */
+    #ai-section {
+      padding: 80px 0;
+      background: linear-gradient(180deg,transparent,rgba(108,99,255,.05),transparent);
+    }
+
+    .ai-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+    }
+    @media (max-width: 900px) {
+      .ai-inner { grid-template-columns: 1fr; }
+      .ai-terminal { order: -1; }
+    }
+
+    .terminal-wrap {
+      background: #0D0D1F;
+      border: 1px solid rgba(108,99,255,.25);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--glow-purp), 0 24px 48px rgba(0,0,0,.5);
+    }
+
+    .terminal-header {
+      background: #12122A;
+      padding: .7rem 1rem;
+      display: flex; align-items: center; gap: .6rem;
+      border-bottom: 1px solid rgba(108,99,255,.15);
+    }
+    .term-dot {
+      width: 11px; height: 11px; border-radius: 50%;
+    }
+    .term-dot.red  { background:#FF5F57; }
+    .term-dot.yel  { background:#FFBD2E; }
+    .term-dot.grn  { background:#28C840; }
+    .term-title { font-size: .78rem; color: var(--text-3); margin-left: .5rem; font-family:'JetBrains Mono',monospace; }
+
+    .terminal-body {
+      padding: 1.2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .78rem;
+      line-height: 1.9;
+      min-height: 280px;
+      overflow: hidden;
+    }
+
+    .t-line { display: flex; gap: .5rem; }
+    .t-prompt { color: var(--purple); }
+    .t-cmd    { color: var(--text-1); }
+    .t-out    { color: var(--cyan); padding-left: 1.2rem; }
+    .t-warn   { color: var(--amber); padding-left: 1.2rem; }
+    .t-ok     { color: var(--green); padding-left: 1.2rem; }
+    .t-label  { color: var(--text-3); padding-left: 1.2rem; }
+    .t-cursor {
+      display: inline-block; width: 8px; height: 14px;
+      background: var(--cyan);
+      vertical-align: middle;
+      animation: blink 1.1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+    .ai-content .list-check {
+      list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: .75rem;
+    }
+    .ai-content .list-check li {
+      display: flex; gap: .75rem; align-items: flex-start;
+      font-size: .9rem; color: var(--text-2);
+    }
+    .ai-content .list-check li .check {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      background: rgba(0,230,118,.12);
+      border: 1px solid rgba(0,230,118,.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .6rem; color: var(--green);
+      margin-top: 2px;
+    }
+
+    /* ══════════════════════════════════════════════
+       PERMISSIONS / HOW IT WORKS
+    ══════════════════════════════════════════════ */
+    #how-it-works { padding: 100px 0; }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .step-card {
+      text-align: center; padding: 2rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      position: relative;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .step-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,.35);
+    }
+
+    .step-num {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg,var(--purple),var(--cyan));
+      color: #fff; font-size: .85rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem;
+      box-shadow: 0 0 20px rgba(108,99,255,.4);
+    }
+    .step-card h3 { font-size: .95rem; font-weight: 700; color: var(--text-1); margin-bottom: .5rem; }
+    .step-card p  { font-size: .82rem; color: var(--text-3); line-height: 1.65; }
+
+    /* connector line */
+    .steps-grid .step-card:not(:last-child)::after {
+      content: '→';
+      position: absolute; top: 50%; right: -1rem;
+      transform: translateY(-50%);
+      color: var(--text-3); font-size: 1rem;
+    }
+
+    /* ══════════════════════════════════════════════
+       SECURITY SPECS
+    ══════════════════════════════════════════════ */
+    #security { padding: 80px 0; }
+
+    .specs-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 1.2rem; margin-top: 3rem;
+    }
+
+    .spec-card {
+      background: linear-gradient(135deg,var(--bg-card2),var(--bg-card));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      display: flex; gap: 1rem;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .spec-card:hover {
+      border-color: rgba(108,99,255,.3);
+      transform: translateY(-3px);
+    }
+    .spec-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .spec-info h4 { font-size: .9rem; font-weight: 700; color: var(--text-1); margin-bottom: .3rem; }
+    .spec-info p  { font-size: .8rem; color: var(--text-3); line-height: 1.6; }
+
+    /* ══════════════════════════════════════════════
+       DOWNLOAD SECTION
+    ══════════════════════════════════════════════ */
+    #download {
+      padding: 100px 0;
+      position: relative; overflow: hidden;
+    }
+
+    #download::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%,rgba(108,99,255,.15) 0%,transparent 70%);
+      pointer-events: none;
+    }
+
+    .download-box {
+      background: linear-gradient(135deg,rgba(108,99,255,.12),rgba(0,229,255,.06));
+      border: 1px solid rgba(108,99,255,.25);
+      border-radius: var(--radius-lg);
+      padding: clamp(2.5rem,6vw,4.5rem) clamp(1.5rem,5vw,4rem);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .download-box::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg,rgba(108,99,255,.05),rgba(200,80,192,.05));
+      border-radius: inherit;
+    }
+
+    .download-box h2 {
+      font-size: clamp(2rem,4vw,3rem);
+      font-weight: 900; color: var(--text-1);
+      letter-spacing: -.03em; margin-bottom: .8rem;
+      position: relative; z-index:1;
+    }
+
+    .download-box p {
+      font-size: 1rem; color: var(--text-3);
+      max-width: 500px; margin: 0 auto 2.5rem;
+      position: relative; z-index:1;
+    }
+
+    .download-actions {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      justify-content: center;
+      position: relative; z-index:1;
+    }
+
+    .btn-download {
+      display: inline-flex; align-items: center; gap: .7rem;
+      background: linear-gradient(135deg,#6C63FF,#00E5FF);
+      color: #fff;
+      font-size: 1.05rem; font-weight: 700;
+      padding: 1rem 2.2rem;
+      border-radius: 99px;
+      text-decoration: none;
+      box-shadow: 0 0 40px rgba(108,99,255,.55), 0 8px 24px rgba(0,0,0,.3);
+      transition: transform var(--transition), box-shadow var(--transition);
+      border: none; cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-download::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg,#00E5FF,#C850C0);
+      opacity: 0; transition: opacity var(--transition);
+      border-radius: inherit;
+    }
+    .btn-download:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 0 60px rgba(108,99,255,.75), 0 16px 40px rgba(0,0,0,.4);
+    }
+    .btn-download:hover::before { opacity: 1; }
+    .btn-download span, .btn-download svg { position: relative; z-index: 1; }
+
+    .btn-download .download-icon { font-size: 1.3rem; }
+
+    .download-note {
+      margin-top: 1.2rem;
+      font-size: .8rem; color: var(--text-3);
+      position: relative; z-index:1;
+    }
+    .download-note a { color: var(--cyan); text-decoration: none; }
+    .download-note a:hover { text-decoration: underline; }
+
+    .download-badges {
+      display: flex; flex-wrap: wrap; gap: .75rem;
+      justify-content: center; margin-top: 2rem;
+      position: relative; z-index: 1;
+    }
+    .dl-badge {
+      display: flex; align-items: center; gap: .4rem;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 99px;
+      padding: .4rem .9rem;
+      font-size: .75rem; color: var(--text-3);
+    }
+    .dl-badge .badge-icon { color: var(--green); font-size: .85rem; }
+
+    /* ══════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════ */
+    footer {
+      padding: 3rem 0 2rem;
+      border-top: 1px solid var(--border);
+      background: rgba(8,8,18,.8);
+      position: relative; z-index: 1;
+    }
+
+    .footer-inner {
+      display: flex; flex-wrap: wrap; gap: 2rem;
+      justify-content: space-between; align-items: flex-start;
+    }
+
+    .footer-brand { max-width: 280px; }
+    .footer-brand p {
+      font-size: .82rem; color: var(--text-3); margin-top: .7rem; line-height: 1.65;
+    }
+
+    .footer-links h4 {
+      font-size: .8rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--text-3);
+      margin-bottom: .8rem;
+    }
+    .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .footer-links a {
+      font-size: .85rem; color: var(--text-3); text-decoration: none;
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--cyan); }
+
+    .footer-bottom {
+      margin-top: 2.5rem; padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      justify-content: space-between; align-items: center;
+    }
+    .footer-bottom p { font-size: .8rem; color: var(--text-3); }
+
+    /* ══════════════════════════════════════════════
+       SCROLL REVEAL
+    ══════════════════════════════════════════════ */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* stagger children */
+    .stagger-children > * {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .stagger-children.visible > *:nth-child(1) { opacity:1;transform:none; transition-delay:.05s; }
+    .stagger-children.visible > *:nth-child(2) { opacity:1;transform:none; transition-delay:.12s; }
+    .stagger-children.visible > *:nth-child(3) { opacity:1;transform:none; transition-delay:.19s; }
+    .stagger-children.visible > *:nth-child(4) { opacity:1;transform:none; transition-delay:.26s; }
+    .stagger-children.visible > *:nth-child(5) { opacity:1;transform:none; transition-delay:.33s; }
+    .stagger-children.visible > *:nth-child(6) { opacity:1;transform:none; transition-delay:.40s; }
+    .stagger-children.visible > *:nth-child(7) { opacity:1;transform:none; transition-delay:.47s; }
+    .stagger-children.visible > *:nth-child(8) { opacity:1;transform:none; transition-delay:.54s; }
+
+    /* ══════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════ */
+    @media (max-width: 600px) {
+      .hero-stats { gap: 1.5rem; }
+      .steps-grid .step-card::after { display: none; }
+      .footer-inner { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── CANVAS BACKGROUND ─────────────────────── -->
+<canvas id="canvas-bg"></canvas>
+
+<!-- ─── NAV ──────────────────────────────────── -->
+<nav id="navbar">
+  <a class="nav-logo" href="#">
+    <div class="shield-icon">🛡️</div>
+    <span>Cyber<em>Agent</em></span>
+  </a>
+
+  <button class="nav-hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#features">Funciones</a></li>
+    <li><a href="#ai-section">IA Defensiva</a></li>
+    <li><a href="#how-it-works">Cómo funciona</a></li>
+    <li><a href="#security">Seguridad</a></li>
+    <li><a href="#download" class="nav-cta">⬇ Descargar</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────── -->
+<section id="hero">
+  <div class="container hero-inner">
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Blue Team · 100% Local · Android
+      </div>
+
+      <h1 class="hero-title">
+        Tu escudo de<br/>
+        <span class="gradient-text">ciberdefensa</span><br/>
+        siempre activo
+      </h1>
+
+      <p class="hero-desc">
+        CyberAgent monitoriza, analiza y protege tu dispositivo Android en tiempo real
+        sin enviar ningún dato a la nube. Todo el poder del análisis de seguridad
+        defensiva en tu bolsillo.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#download" class="btn-primary">
+          <span class="btn-icon">⬇</span>
+          Descargar gratis
+        </a>
+        <a href="#features" class="btn-secondary">
+          Ver funciones →
+        </a>
+      </div>
+
+      <div class="hero-stats reveal">
+        <div class="hero-stat-item">
+          <div class="num">100<span>%</span></div>
+          <div class="label">Offline / Local</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="num">9<span>+</span></div>
+          <div class="label">Módulos activos</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="num">v<span>2.0</span></div>
+          <div class="label">Versión actual</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="phone-wrap">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-topbar">
+              <div>
+                <div class="phone-app-name">🛡️ CyberAgent</div>
+                <div class="phone-sub">Centro de ciberdefensa</div>
+              </div>
+              <div style="color:#00E5FF;font-size:6px;font-weight:700;">⚙</div>
+            </div>
+
+            <div class="phone-card green">
+              <div class="phone-status">✅ Sistema Seguro</div>
+              <div class="phone-info">0 alertas · Monitor activo · 14 apps vigiladas</div>
+            </div>
+
+            <div class="phone-scan-bar"><div class="phone-scan-fill"></div></div>
+
+            <div style="font-size:5px;color:#4A6080;padding:4px 8px 2px;letter-spacing:.08em;font-weight:700;">MÓDULOS ACTIVOS</div>
+
+            <div class="phone-grid">
+              <div class="phone-mini-card">
+                <div class="phone-mini-icon">📞</div>
+                <div class="phone-mini-label">Blindaje</div>
+                <div class="phone-mini-val">ON</div>
+              </div>
+              <div class="phone-mini-card">
+                <div class="phone-mini-icon">🌐</div>
+                <div class="phone-mini-label">Internet</div>
+                <div class="phone-mini-val">2.1 GB</div>
+              </div>
+              <div class="phone-mini-card">
+                <div class="phone-mini-icon">🔒</div>
+                <div class="phone-mini-label">VPN FW</div>
+                <div class="phone-mini-val">ON</div>
+              </div>
+              <div class="phone-mini-card">
+                <div class="phone-mini-icon">🦠</div>
+                <div class="phone-mini-label">Quarant.</div>
+                <div class="phone-mini-val">0</div>
+              </div>
+            </div>
+
+            <div class="phone-card dark" style="margin-top:4px;">
+              <div style="color:#00E5FF;font-weight:700;font-size:7px;">🤖 CyberAgent IA</div>
+              <div style="color:#6FA8DC;font-size:5.5px;margin-top:2px;">Sin actividad sospechosa detectada en las últimas 24h</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── TRUST BAR ─────────────────────────────── -->
+<div id="trust-bar">
+  <div class="container">
+    <div class="trust-inner stagger-children">
+      <div class="trust-item"><span class="icon">🔐</span> Privacidad total — sin telemetría</div>
+      <div class="trust-item"><span class="icon">⚡</span> Análisis en tiempo real</div>
+      <div class="trust-item"><span class="icon">📵</span> Funciona sin conexión</div>
+      <div class="trust-item"><span class="icon">🛡️</span> Blue Team certificado</div>
+      <div class="trust-item"><span class="icon">🤖</span> Asistente IA integrado</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FEATURES ──────────────────────────────── -->
+<section id="features">
+  <div class="container">
+    <div class="features-header reveal">
+      <div class="section-tag">✦ Funcionalidades</div>
+      <h2 class="section-title">Todo lo que necesitas<br/>para defender tu dispositivo</h2>
+      <p class="section-subtitle">Nueve módulos de ciberseguridad integrados, todos funcionando localmente en tu teléfono.</p>
+    </div>
+
+    <div class="features-grid stagger-children">
+
+      <!-- 1 -->
+      <div class="feature-card v-cyan">
+        <div class="feature-icon-wrap">🛡️</div>
+        <h3>Panel de Seguridad Ejecutivo</h3>
+        <p>Dashboard en tiempo real con estado global del sistema, contador de alertas, modo pánico y control de internet por aplicación.</p>
+        <span class="feature-tag">Core</span>
+      </div>
+
+      <!-- 2 -->
+      <div class="feature-card v-purp">
+        <div class="feature-icon-wrap">📞</div>
+        <h3>Blindaje de Llamadas y SMS</h3>
+        <p>Bloquea llamadas y mensajes no deseados con listas blancas/negras, detección de spam y modo No Molestar programable.</p>
+        <span class="feature-tag">Protección</span>
+      </div>
+
+      <!-- 3 -->
+      <div class="feature-card v-green">
+        <div class="feature-icon-wrap">🌐</div>
+        <h3>Monitor de Uso de Internet</h3>
+        <p>Visualiza el consumo de datos por aplicación, detecta picos anómalos y bloquea el acceso a internet por app con un solo toque.</p>
+        <span class="feature-tag">Red</span>
+      </div>
+
+      <!-- 4 -->
+      <div class="feature-card v-red">
+        <div class="feature-icon-wrap">🦠</div>
+        <h3>Centro de Cuarentena</h3>
+        <p>Aísla aplicaciones sospechosas, revoca permisos peligrosos y gestiona el historial de amenazas detectadas.</p>
+        <span class="feature-tag">Amenazas</span>
+      </div>
+
+      <!-- 5 -->
+      <div class="feature-card v-amber">
+        <div class="feature-icon-wrap">🔬</div>
+        <h3>Verificador Forense</h3>
+        <p>Analiza archivos mediante hash SHA-256, compara firmas contra bases de datos locales e identifica indicadores de compromiso (IoC).</p>
+        <span class="feature-tag">Forense</span>
+      </div>
+
+      <!-- 6 -->
+      <div class="feature-card v-pink">
+        <div class="feature-icon-wrap">📶</div>
+        <h3>Análisis de Seguridad Wi-Fi</h3>
+        <p>Inspecciona la red Wi-Fi activa, detecta configuraciones débiles, redes abiertas peligrosas y posibles ataques man-in-the-middle.</p>
+        <span class="feature-tag">Red</span>
+      </div>
+
+      <!-- 7 -->
+      <div class="feature-card v-purp">
+        <div class="feature-icon-wrap">📱</div>
+        <h3>Análisis de Aplicaciones</h3>
+        <p>Audita los permisos de cada app instalada, detecta comportamientos anómalos y proporciona un índice de riesgo detallado.</p>
+        <span class="feature-tag">Apps</span>
+      </div>
+
+      <!-- 8 -->
+      <div class="feature-card v-cyan">
+        <div class="feature-icon-wrap">🔥</div>
+        <h3>Cortafuegos VPN Local</h3>
+        <p>Firewall de red implementado como servicio VPN local que intercepta y filtra tráfico saliente sin salir del dispositivo.</p>
+        <span class="feature-tag">Firewall</span>
+      </div>
+
+      <!-- 9 -->
+      <div class="feature-card v-green">
+        <div class="feature-icon-wrap">📊</div>
+        <h3>Resumen de Métricas &amp; Widgets</h3>
+        <p>Widgets de escritorio 4×2 y 2×2 con estadísticas de seguridad en tiempo real. Historiales y gráficas de uso diario.</p>
+        <span class="feature-tag">Dashboard</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── AI SECTION ────────────────────────────── -->
+<section id="ai-section">
+  <div class="container ai-inner">
+
+    <div class="ai-terminal reveal">
+      <div class="terminal-wrap">
+        <div class="terminal-header">
+          <div class="term-dot red"></div>
+          <div class="term-dot yel"></div>
+          <div class="term-dot grn"></div>
+          <span class="term-title">CyberAgent IA — Asistente Blue Team</span>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+          <div class="t-line"><span class="t-prompt">cyber@agent:~$</span> <span class="t-cmd">analyze_logs --last 24h</span></div>
+          <div class="t-line"><span class="t-out">→ Analizando 2,847 eventos de sistema...</span></div>
+          <div class="t-line"><span class="t-warn">⚠ Anomalía detectada: com.unknown.app</span></div>
+          <div class="t-line"><span class="t-label">  Severity: ALTA | MITRE ATT&CK: T1422</span></div>
+          <br/>
+          <div class="t-line"><span class="t-prompt">cyber@agent:~$</span> <span class="t-cmd">review_code app.dex --lang java</span></div>
+          <div class="t-line"><span class="t-ok">✓ Análisis estático completado</span></div>
+          <div class="t-line"><span class="t-warn">⚠ CVE-2024-0031 — permisos excesivos</span></div>
+          <br/>
+          <div class="t-line"><span class="t-prompt">cyber@agent:~$</span> <span class="t-cmd">scan_ports 192.168.1.0/24</span></div>
+          <div class="t-line"><span class="t-out">→ ¿Confirmas autorización sobre el objetivo?</span></div>
+          <div class="t-line"><span class="t-prompt">cyber@agent:~$</span> <span class="t-cursor"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ai-content reveal">
+      <div class="section-tag">🤖 IA Defensiva</div>
+      <h2 class="section-title">Asistente de seguridad<br/>con ciclo ReAct</h2>
+      <p class="section-subtitle">
+        CyberAgent integra un agente IA especializado en ciberseguridad defensiva que opera
+        100% offline. Analiza, planifica y actúa siguiendo estándares de la industria.
+      </p>
+
+      <ul class="list-check">
+        <li><span class="check">✓</span>Análisis de logs con detección de anomalías en tiempo real</li>
+        <li><span class="check">✓</span>Revisión de código fuente para detectar vulnerabilidades (OWASP)</li>
+        <li><span class="check">✓</span>Consulta de IoCs contra bases locales y VirusTotal / AbuseIPDB</li>
+        <li><span class="check">✓</span>Clasificación por severidad CVSS v3 y referencias MITRE ATT&CK</li>
+        <li><span class="check">✓</span>Memoria RAG — recuerda el contexto de sesiones anteriores</li>
+        <li><span class="check">✓</span>Guardrails estrictos: jamás genera código malicioso</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── HOW IT WORKS ───────────────────────────── -->
+<section id="how-it-works">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-tag">⚙ Cómo funciona</div>
+      <h2 class="section-title">En marcha en 3 pasos</h2>
+      <p class="section-subtitle" style="margin:0 auto;">Instala, activa los permisos necesarios y CyberAgent empieza a protegerte de inmediato.</p>
+    </div>
+
+    <div class="steps-grid stagger-children">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Descarga e instala</h3>
+        <p>Descarga el APK directamente. Compatible con Android 8.0+ (API 26). No requiere tienda de apps.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Concede permisos</h3>
+        <p>Activa el servicio de accesibilidad y VPN local para que los módulos de protección funcionen en segundo plano.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Configura tu perfil</h3>
+        <p>Elige la sensibilidad de alertas (baja / media / alta) y personaliza listas de apps de confianza según tus necesidades.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h3>Protección continua</h3>
+        <p>CyberAgent monitoriza tu dispositivo 24/7 con arranque automático, notificaciones segmentadas y widgets de estado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECURITY SPECS ────────────────────────── -->
+<section id="security">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-tag">🔒 Seguridad &amp; Privacidad</div>
+      <h2 class="section-title">Diseñado para equipos<br/>Blue Team</h2>
+    </div>
+
+    <div class="specs-grid stagger-children">
+      <div class="spec-card">
+        <div class="spec-icon">🏠</div>
+        <div class="spec-info">
+          <h4>100% Local</h4>
+          <p>Ningún dato abandona el dispositivo. Sin telemetría, sin servidores externos, sin analíticas de uso.</p>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-icon">🔑</div>
+        <div class="spec-info">
+          <h4>Sin almacenamiento de credenciales</h4>
+          <p>Las claves API opcionales (VirusTotal, AbuseIPDB) se guardan cifradas en el keystore local del dispositivo.</p>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-icon">⚖️</div>
+        <div class="spec-info">
+          <h4>Uso ético garantizado</h4>
+          <p>Guardrails integrados en la IA que impiden la generación de código malicioso o asistencia en actividades ilegales.</p>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-icon">🛡️</div>
+        <div class="spec-info">
+          <h4>Confirmación humana</h4>
+          <p>Cualquier operación de red (escaneos, consultas externas) requiere confirmación explícita del usuario antes de ejecutarse.</p>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-icon">🔄</div>
+        <div class="spec-info">
+          <h4>Arranque automático seguro</h4>
+          <p>El servicio de monitorización se reinicia tras cada arranque del dispositivo mediante un BroadcastReceiver protegido.</p>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-icon">📋</div>
+        <div class="spec-info">
+          <h4>Estándares de la industria</h4>
+          <p>Clasificación CVSS v3, referencias MITRE ATT&CK y OWASP Top 10 integradas en todos los análisis y alertas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DOWNLOAD ──────────────────────────────── -->
+<section id="download">
+  <div class="container">
+    <div class="download-box reveal">
+      <h2>Descarga CyberAgent ahora</h2>
+      <p>Gratuito, open-source y sin restricciones. Protege tu dispositivo Android hoy mismo.</p>
+
+      <div class="download-actions">
+        <a href="https://github.com/tu-usuario/cyberagent/releases/latest/download/CyberAgent.apk"
+           class="btn-download"
+           id="btn-download-apk"
+           download>
+          <span class="download-icon">⬇</span>
+          <span>Descargar APK</span>
+        </a>
+        <a href="https://github.com/tu-usuario/cyberagent/releases" class="btn-secondary" target="_blank" rel="noopener">
+          Ver todas las versiones →
+        </a>
+      </div>
+
+      <p class="download-note">
+        Android 8.0+ (API 26) · v2.0 · ~8 MB<br/>
+        <a href="#security">Sin telemetría · 100% local</a>
+      </p>
+
+      <div class="download-badges">
+        <div class="dl-badge"><span class="badge-icon">✓</span> Android 8.0+</div>
+        <div class="dl-badge"><span class="badge-icon">✓</span> Código abierto</div>
+        <div class="dl-badge"><span class="badge-icon">✓</span> Sin rastreadores</div>
+        <div class="dl-badge"><span class="badge-icon">✓</span> Firma verificada</div>
+        <div class="dl-badge"><span class="badge-icon">✓</span> Sin costes ocultos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a class="nav-logo" href="#">
+          <div class="shield-icon">🛡️</div>
+          <span style="font-size:1.1rem;font-weight:800;color:#fff;">Cyber<em style="color:var(--cyan);font-style:normal;">Agent</em></span>
+        </a>
+        <p>Centro de ciberdefensa local para Android. Seguridad defensiva sin comprometer tu privacidad.</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Aplicación</h4>
+        <ul>
+          <li><a href="#features">Funciones</a></li>
+          <li><a href="#ai-section">IA Defensiva</a></li>
+          <li><a href="#security">Privacidad</a></li>
+          <li><a href="#download">Descargar</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>Módulos</h4>
+        <ul>
+          <li><a href="#features">Panel ejecutivo</a></li>
+          <li><a href="#features">Blindaje llamadas</a></li>
+          <li><a href="#features">Cortafuegos VPN</a></li>
+          <li><a href="#features">Verificador forense</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>Recursos</h4>
+        <ul>
+          <li><a href="https://github.com/aurenox-global/cyberagente" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="#download">Changelog</a></li>
+          <li><a href="https://attack.mitre.org/" target="_blank" rel="noopener">MITRE ATT&CK</a></li>
+          <li><a href="https://owasp.org/" target="_blank" rel="noopener">OWASP</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 CyberAgent · Todos los derechos reservados</p>
+      <p style="color:var(--text-3);font-size:.78rem;">
+        Construido con ❤️ para el Blue Team · Android v2.0
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script>
+/* ── Canvas particles ─────────────────────── */
+(function () {
+  const canvas = document.getElementById('canvas-bg');
+  const ctx    = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  const COLORS = ['#6C63FF','#00E5FF','#C850C0','#00E676'];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function random(min, max) { return Math.random() * (max - min) + min; }
+
+  function createParticle() {
+    return {
+      x:  random(0, W),
+      y:  random(0, H),
+      r:  random(.8, 2.2),
+      vx: random(-.3, .3),
+      vy: random(-.3, .3),
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      alpha: random(.3, .9),
+      da: random(.003, .008) * (Math.random() > .5 ? 1 : -1)
+    };
+  }
+
+  function init() {
+    resize();
+    particles = [];
+    const count = Math.min(Math.floor(W * H / 12000), 120);
+    for (let i = 0; i < count; i++) particles.push(createParticle());
+  }
+
+  function drawConnections() {
+    const maxDist = 140;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < maxDist) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(108,99,255,${.15 * (1 - dist / maxDist)})`;
+          ctx.lineWidth = .5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    drawConnections();
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      p.alpha += p.da;
+      if (p.alpha > .9 || p.alpha < .2) p.da *= -1;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = p.color + Math.round(p.alpha * 255).toString(16).padStart(2,'0');
+      ctx.fill();
+    });
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => { resize(); init(); });
+  init();
+  animate();
+})();
+
+/* ── Navbar scroll effect ─────────────────── */
+(function () {
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 20
+      ? 'rgba(6,6,16,.97)'
+      : 'rgba(8,8,18,.8)';
+  });
+})();
+
+/* ── Hamburger ────────────────────────────── */
+(function () {
+  const btn   = document.getElementById('hamburger');
+  const links = document.getElementById('nav-links');
+  btn.addEventListener('click', () => {
+    links.classList.toggle('open');
+  });
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => links.classList.remove('open'));
+  });
+})();
+
+/* ── Scroll reveal ────────────────────────── */
+(function () {
+  const targets = document.querySelectorAll('.reveal, .stagger-children');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  targets.forEach(t => observer.observe(t));
+})();
+
+/* ── Typewriter terminal ──────────────────── */
+(function () {
+  const lines = [
+    { type: 'cmd',   text: 'analyze_logs --last 24h' },
+    { type: 'out',   text: '→ Analizando 2,847 eventos...' },
+    { type: 'warn',  text: '⚠ Anomalía: com.unknown.process' },
+    { type: 'label', text: '  Severity: ALTA | T1422 (Network Config Disc.)' },
+    { type: 'blank', text: '' },
+    { type: 'cmd',   text: 'query_virustotal 6b3a55e0261a1e5e6dae72...' },
+    { type: 'ok',    text: '✓ Hash limpio — 0/72 engines' },
+    { type: 'blank', text: '' },
+    { type: 'cmd',   text: 'search_memory "persistence android"' },
+    { type: 'out',   text: '→ 3 entradas relevantes encontradas' },
+    { type: 'label', text: '  Boot receiver · Accessibility Abuse · JobScheduler' },
+  ];
+
+  const body = document.getElementById('terminal-body');
+  let lineIndex = 0;
+
+  function addLine() {
+    if (lineIndex >= lines.length) { lineIndex = 0; body.innerHTML = ''; }
+    const l = lines[lineIndex++];
+    const div = document.createElement('div');
+    div.className = 't-line';
+
+    if (l.type === 'cmd') {
+      div.innerHTML = `<span class="t-prompt">cyber@agent:~$</span>&nbsp;<span class="t-cmd"></span>`;
+      body.appendChild(div);
+      typeText(div.querySelector('.t-cmd'), l.text, addLine);
+    } else if (l.type === 'blank') {
+      div.innerHTML = '&nbsp;';
+      body.appendChild(div);
+      setTimeout(addLine, 300);
+    } else {
+      const cls = `t-${l.type}`;
+      div.innerHTML = `<span class="${cls}"></span>`;
+      body.appendChild(div);
+      typeText(div.querySelector(`.${cls}`), l.text, addLine);
+    }
+
+    // auto-scroll
+    body.scrollTop = body.scrollHeight;
+    if (body.children.length > 18) body.removeChild(body.children[0]);
+  }
+
+  function typeText(el, text, cb) {
+    let i = 0;
+    const speed = 28;
+    function tick() {
+      if (i < text.length) { el.textContent += text[i++]; setTimeout(tick, speed); }
+      else setTimeout(cb, 400);
+    }
+    tick();
+  }
+
+  setTimeout(addLine, 1200);
+})();
+
+/* ── Smooth anchor scroll ─────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+
+/* ── Download button analytics (console) ─── */
+document.getElementById('btn-download-apk').addEventListener('click', function () {
+  console.log('[CyberAgent] Download initiated');
+});
+</script>
+</body>
+</html>
