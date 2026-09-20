@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">CyberAgent</string>
+    <string name="about_author">Creado por Andrés Mag (Cuba)</string>
+    <string name="about_author_full">CyberAgent — Creado por Andrés Mag, desde Cuba. Todos los derechos reservados.</string>
+    <string name="accessibility_label">CyberAgent — Guardia de instalación</string>
+    <string name="notif_guard_label">CyberAgent — Guardián de enlaces</string>
+    <string name="widget_dashboard_label">CyberAgent — panel 4x4</string>
+    <string name="widget_dashboard_desc">Estado completo: escaneos, apps analizadas, cuarentena, alertas y apps con tráfico reciente.</string>
+    <string name="share_label">CyberAgent — comprobar enlace</string>
+    <string name="overlay_guard_label">CyberAgent — Pantalla falsa</string>
+    <string name="overlay_guard_desc">Avisa cuando una aplicación dibuja una ventana encima de otra (posible pantalla falsa para capturar tus datos). Solo se activa si tú lo decides.</string>
+    <string name="accessibility_description">Detecta cambios de ventana (por ejemplo, el instalador de paquetes) para avisarte de instalaciones en curso. NO lee el contenido de la pantalla ni el texto que escribes.</string>
+
+    <string name="chan_monitor">Monitor de seguridad</string>
+    <string name="chan_monitor_desc">Estado del sistema y alertas de seguridad</string>
+    <string name="chan_alerts">Alertas</string>
+    <string name="chan_alerts_desc">Avisos de amenazas y eventos relevantes</string>
+
+    <string name="widget_stats_label">CyberAgent — estado</string>
+    <string name="widget_usage_label">CyberAgent — uso de red</string>
+    <string name="widget_daily_label">CyberAgent — red 7 días</string>
+</resources>

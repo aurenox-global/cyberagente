@@ -1,0 +1,18 @@
+<resources>
+    <!--
+      Tema AppCompat puro (dark). Se evita Theme.Material3 porque las actividades
+      construyen la UI con widgets AppCompat y no necesitan Material Components:
+      así no se inflan componentes Material que puedan reventar en runtime.
+    -->
+    <style name="Theme.CyberAgent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">#03060A</item>
+        <item name="colorPrimary">#00FFD6</item>
+        <item name="colorPrimaryDark">#03060A</item>
+        <item name="colorAccent">#00FFD6</item>
+        <item name="android:textColorPrimary">#E8FFF9</item>
+        <item name="android:textColorSecondary">#8FB3BF</item>
+        <item name="android:textColorHint">#4A6B77</item>
+        <item name="android:statusBarColor">#02050A</item>
+        <item name="android:navigationBarColor">#02050A</item>
+    </style>
+</resources>

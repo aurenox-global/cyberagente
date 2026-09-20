@@ -66,7 +66,7 @@ referencia MITRE ATT&CK), **autodiagnóstico de 10 comprobaciones**, **informe H
 
 ```bash
 # APK v2.5.1 — Android 8.0+ (API 26) · ~4,5 MB
-curl -LO https://serious-favourite-manhattan-buying.trycloudflare.com/CyberAgent_2.5.1.apk
+curl -LO https://github.com/aurenox-global/cyberagente/releases/download/v2.5.1/CyberAgent_2.5.1.apk
 
 # Verifica el hash antes de instalar
 sha256sum CyberAgent_2.5.1.apk
@@ -76,8 +76,7 @@ sha256sum CyberAgent_2.5.1.apk
 bf975e5184171fead3fb82e8429de5d140cf434c85e47dedaf0a250b24a35013
 ```
 
-> El enlace directo es temporal (túnel). La release oficial vive en
-> [GitHub Releases](https://github.com/aurenox-global/cyberagente/releases).
+> Descarga oficial: [GitHub Releases](https://github.com/aurenox-global/cyberagente/releases/tag/v2.5.1).
 
 ### Verificación de la descarga
 

@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="#050A10">
+
+    <TextView
+        android:id="@+id/w_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#00FFD6"
+        android:textSize="10sp"
+        android:letterSpacing="0.12"
+        android:text="RED · HOY" />
+
+    <TextView
+        android:id="@+id/w_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#E8FFF9"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="0 MB" />
+
+    <TextView
+        android:id="@+id/w_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#8FB3BF"
+        android:textSize="10sp"
+        android:text="sin datos" />
+</LinearLayout>

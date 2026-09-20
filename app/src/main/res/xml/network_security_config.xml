@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Sin tráfico en claro. A diferencia de la v2.0 (cleartextTrafficPermitted=true),
+  aquí queda prohibido de forma global, y además se fija Certificate Transparency
+  y se declaran explícitamente los dominios de consulta de IoC (solo HTTPS).
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

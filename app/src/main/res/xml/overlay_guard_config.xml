@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Configuración del guardián de superposiciones. A diferencia del servicio
+  mínimo (que NO lee contenido), este sí necesita ver las ventanas: es lo que
+  permite detectar una pantalla dibujada por encima de otra app.
+  Solo se activa si el usuario lo decide.
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowsChanged|typeWindowStateChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagRetrieveInteractiveWindows|flagIncludeNotImportantViews"
+    android:canRetrieveWindowContent="true"
+    android:description="@string/overlay_guard_desc"
+    android:notificationTimeout="300" />

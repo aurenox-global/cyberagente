@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="#050A10">
+
+    <TextView
+        android:id="@+id/w_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#00FFD6"
+        android:textSize="10sp"
+        android:letterSpacing="0.12"
+        android:text="RED · 7 DÍAS" />
+
+    <ImageView
+        android:id="@+id/w_chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="4dp"
+        android:contentDescription="@string/widget_daily_label" />
+
+    <TextView
+        android:id="@+id/w_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#8FB3BF"
+        android:textSize="10sp"
+        android:text="0 MB" />
+</LinearLayout>
