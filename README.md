@@ -1,13 +1,22 @@
+<div align="center">
+
 # 🛡️ CyberAgent
 
-### Consola de ciberdefensa local para Android
+**Consola de ciberdefensa 100 % local para Android.**
+Bloquea la red de apps concretas, filtra SMS y llamadas, audita permisos, detecta phishing,
+vigila la Wi-Fi y genera informes forenses — **todo en el dispositivo**.
 
-[![Release](https://img.shields.io/badge/release-v2.6.0-00FFD6?style=flat-square&labelColor=03060A)](https://github.com/aurenox-global/cyberagente/releases)
-[![Android](https://img.shields.io/badge/android-8.0%2B%20(API%2026)-8FB3BF?style=flat-square&labelColor=03060A)](#-instalación)
-[![Telemetría](https://img.shields.io/badge/telemetría-0-00FF88?style=flat-square&labelColor=03060A)](#-privacidad)
-[![Licencia](https://img.shields.io/badge/licencia-open%20source-3DA9FF?style=flat-square&labelColor=03060A)](./LICENSE)
+[![Release](https://img.shields.io/github/v/release/aurenox-global/cyberagente?style=flat-square&color=3FE0A6&labelColor=070B0A)](https://github.com/aurenox-global/cyberagente/releases/latest)
+[![Android](https://img.shields.io/badge/android-8.0%2B%20(API%2026)-9AA8A2?style=flat-square&labelColor=070B0A)](#-instalación)
+[![Telemetría](https://img.shields.io/badge/telemetría-0-4ADE80?style=flat-square&labelColor=070B0A)](#-privacidad)
+[![Licencia](https://img.shields.io/badge/licencia-open%20source-5AA9FF?style=flat-square&labelColor=070B0A)](./LICENSE)
+[![Kotlin](https://img.shields.io/badge/kotlin-2.0-9B8CFF?style=flat-square&labelColor=070B0A)](https://kotlinlang.org)
 
-**Creado por Andrés Mag (Cuba)** · Todos los derechos reservados.
+🌐 **[aurenox-global.github.io/cyberagente](https://aurenox-global.github.io/cyberagente/)**
+
+<sub>Creado por **Andrés Mag** (Cuba)</sub>
+
+</div>
 
 ---
 
@@ -21,62 +30,49 @@ Todo se ejecuta **en el dispositivo**. Sin telemetría, sin cuentas, sin SDK de 
 
 ---
 
-## ✨ 16 defensas (todas funcionales)
+## 🧩 16 defensas (todas funcionales)
 
 | # | Defensa | Qué hace de verdad |
 |---|---------|--------------------|
-| 01 | **Panel de seguridad** | Estado real, accesos concedidos, acciones rápidas, últimos eventos |
-| 02 | **Cortafuegos por app (VPN)** | Enruta el tráfico de las apps marcadas al túnel y lo **descarta** (IPv4 + IPv6) |
+| 01 | **Panel de seguridad** | Estado real, accesos concedidos, acciones rápidas y últimos eventos |
+| 02 | **Cortafuegos VPN** | Enruta el tráfico de las apps marcadas al túnel local y lo **descarta** (IPv4 + IPv6) |
 | 03 | **Blindaje de llamadas** | `CallScreeningService`: rechaza lista negra, ocultos y no verificados (STIR/SHAKEN) |
 | 04 | **Blindaje de SMS** | Analiza cada SMS y **descarta** los fraudulentos cuando es la app de SMS |
 | 05 | **Monitor de Internet** | Consumo por app del día y de 7 días vía `NetworkStatsManager` |
 | 06 | **Centro de cuarentena** | Aísla (corta la red), registra y ofrece desinstalar |
 | 07 | **Verificador forense** | SHA-256 de ficheros + comprobación contra la base local de IoC |
-| 08 | **Análisis de Wi-Fi** | Cifrado, redes abiertas, señales de suplantación |
-| 09 | **Auditoría de apps** | Score de riesgo explicable: permisos, targetSdk, procedencia, firma |
+| 08 | **Análisis de Wi-Fi** | Cifrado, redes abiertas y señales de suplantación |
+| 09 | **Auditoría de apps** | Score de riesgo explicable: permisos, targetSdk, procedencia, firma y postura |
 | 10 | **Widget Panel 4×4** | Escaneos, apps analizadas, cuarentena, alertas 24 h y apps con tráfico reciente |
 | 11 | **Guardián de enlaces** | Anti-phishing en SMS, notificaciones y "Compartir" (acortadores, punycode, marcas) |
 | 12 | **Escaneo por huella** | SHA-256 del APK y del certificado + VirusTotal opcional respetando cuota |
 | 13 | **Vigilante de permisos** | Avisa si una actualización añade permisos sensibles |
 | 14 | **Anti-superposición** | Detecta una ventana dibujada sobre otra app (pantalla falsa bancaria) |
 | 15 | **Bloqueo por horario** | Perfil noche: dentro de la franja solo las apps de confianza tienen red |
-| 16 | **Panel de confianza + IoC** | Recomendaciones por app y base de dominios actualizable por HTTPS |
+| 16 | **Confianza + IoC** | Recomendaciones por app y base de dominios actualizable por HTTPS |
 
-Extra: **asistente defensivo local** (ciclo Observar → Analizar → Recomendar con severidad y
-referencia MITRE ATT&CK), **autodiagnóstico de 10 comprobaciones**, **informe HTML forense**,
-**exportación JSON** y **copia de seguridad cifrada** (AES-256-GCM + PBKDF2).
+**Extras:** asistente defensivo local (ciclo *Observar → Analizar → Recomendar* con MITRE
+ATT&CK), autodiagnóstico de 10 comprobaciones, informe HTML forense, exportación JSON y
+copia de seguridad cifrada (AES-256-GCM + PBKDF2).
 
-### Novedades de la v2.6.0
+---
 
-- **Nuevo look (soft dark + menta)**: paleta renovada, tarjetas redondeadas, fondo con
-  resplandor y tipografía mixta (títulos en sans, datos en monoespaciada).
-- **Panel con pestañas de navegador**: Inicio · Módulos · Acciones · Eventos. La cabecera y las
-  pestañas quedan **fijas**; solo hace scroll el contenido entre las pestañas y el dock.
-- **Iconos vectoriales propios** (trazo 24×24, tintables): fuera los emoji de la interfaz.
-- **Motor de riesgo rebalanceado (menos falsos positivos)**: el riesgo son permisos *con tope* +
-  señales de postura (sideload, APK debuggable, targetSdk antiguo, combinaciones anómalas como
-  overlay+accesibilidad o SMS+Internet, app oculta, suplantación de marca y de banca) − amortiguadores
-  (tienda oficial, targetSdk moderno, firma de confianza). Antes cualquier app con muchos permisos
-  legítimos llegaba a «100/100 crítico».
-- **Vigilante de firma**: avisa si una actualización **cambia el firmante** de una app (repackage).
+## 🆕 Novedades de la v2.6.0
+
+- **Nuevo look (soft dark + menta):** tarjetas redondeadas, fondo con resplandor y tipografía
+  mixta (títulos en sans, datos en monoespaciada).
+- **Panel con pestañas de navegador:** *Inicio · Módulos · Acciones · Eventos*. La cabecera y
+  las pestañas quedan **fijas**; solo hace scroll el contenido.
+- **Iconos vectoriales** propios (trazo 24×24 tintable): fuera los emoji de la interfaz.
+- **Motor de riesgo rebalanceado (menos falsos positivos):** permisos *con tope* + señales de
+  postura (sideload, APK debuggable, targetSdk antiguo, combinaciones anómalas, app oculta,
+  suplantación de marca y banca) − amortiguadores (tienda oficial, targetSdk moderno, firma de
+  confianza). Antes, cualquier app con muchos permisos legítimos llegaba a «100/100 crítico».
+- **Vigilante de firma:** avisa si una actualización **cambia el firmante** (repackage).
 - **Reputación de firma** y **whitelist por firma** (marcar un desarrollador de confianza).
-- **IoC integrado en el score**: si el hash del APK está en la lista de indicadores, pasa a crítico.
-- Correcciones: RDAP ya no hace red en el hilo principal; el cortafuegos desactiva su estado si no
-  hay apps que bloquear; análisis Wi-Fi en Android 8–12; filas de botones que ya no parten el texto.
-
-### Novedades de la v2.5.1
-
-- **Widget 4×4** con escaneos, apps analizadas, cuarentena, alertas 24 h y **apps con tráfico
-  en los últimos 15 minutos** + botón de escaneo inmediato.
-- **Guardián de enlaces** como destino de "Compartir" y sobre las notificaciones de cualquier app.
-- **Escaneo en lote por huella** de todas las apps instaladas.
-- **Vigilante de permisos** (permisos que cambian tras una actualización).
-- **Anti-superposición** (opcional, requiere accesibilidad con lectura de ventanas).
-- **Bloqueo por horario** y **vigilante de red** (portal cautivo, cambio de DNS, Wi-Fi abierta).
-- **Panel de confianza** por aplicación con acciones concretas.
-- **Informe HTML forense** exportable, con el crédito del autor.
-- **Base IoC actualizable** con verificación por huella SHA-256.
-- Rendimiento: todo lo pesado (red, apps, historial) pasó a **segundo plano** con caché.
+- **IoC integrado en el score:** si el hash del APK está en la lista, pasa directamente a crítico.
+- **Correcciones:** RDAP fuera del hilo principal, cortafuegos sin avisos falsos, Wi-Fi
+  auditable en Android 8–12 y filas de botones que ya no parten el texto.
 
 ---
 
@@ -96,6 +92,9 @@ sha256sum CyberAgent_2.6.0.apk
 
 > Descarga oficial: [GitHub Releases](https://github.com/aurenox-global/cyberagente/releases/tag/v2.6.0).
 
+Se instala **encima** de cualquier versión previa 2.x (misma firma). Si vienes de la v2.0,
+desinstala primero: cambió el certificado.
+
 ### Verificación de la descarga
 
 ```
@@ -108,9 +107,6 @@ cleartext    : false (solo HTTPS)
 allowBackup  : false
 Telemetría   : 0 SDK de analítica / crash reporting
 ```
-
-Se instala **encima** de cualquier versión previa 2.x (misma firma). Si vienes de la v2.0,
-desinstala primero: cambió el certificado.
 
 ### Primer arranque: el asistente de accesos
 
@@ -128,8 +124,16 @@ Cada paso explica **para qué sirve**. Los opcionales no fuerzan nada.
 
 ## 🔨 Compilar desde el código
 
+Necesitas el **SDK de Android (API 35)** y **JDK 17**.
+
 ```bash
-# Necesita el SDK de Android (API 35) y JDK 17
+git clone https://github.com/aurenox-global/cyberagente.git
+cd cyberagente
+
+# Indica tu SDK
+echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+# Build de release (necesita el keystore; ver gradle.properties)
 ./gradlew assembleRelease
 ```
 
@@ -139,110 +143,86 @@ Sin `gradlew` en el repo, usa tu Gradle 8.x:
 gradle assembleRelease
 ```
 
-La firma se toma de `gradle.properties` (`cyberagent.storeFile`, …) o de las variables
+La firma de release se configura en `app/build.gradle.kts` (bloque `signingConfigs`), leyendo
+las propiedades `cyberagent.storeFile`, `cyberagent.storePassword`, `cyberagent.keyAlias` y
+`cyberagent.keyPassword` de `gradle.properties` o de variables de entorno
 `CYBERAGENT_STORE_PASSWORD`, `CYBERAGENT_KEY_ALIAS`, `CYBERAGENT_KEY_PASSWORD`.
 
 ---
 
-## 🔒 Privacidad
-
-- **Nada sale del dispositivo** salvo lo que tú autorices explícitamente.
-- Los eventos (**título y detalle**) se guardan **cifrados** (AES-256-GCM, clave en el
-  Android Keystore, no exportable).
-- Los ajustes y listas de bloqueo también se cifran antes de escribirse.
-- Las consultas externas (VirusTotal, RDAP) son **opcionales**, por **HTTPS obligatorio**, y
-  requieren tu clave o tu activación en Ajustes.
-- `allowBackup=false`: sin copia en la nube. La copia de seguridad cifrada la decides tú, con
-  tu propia contraseña.
-- El guardián de notificaciones **no guarda el texto** de los mensajes: solo el dominio
-  sospechoso y la app de origen.
-
----
-
-## 🧱 Stack
-
-- **Kotlin** + **AppCompat puro** (UI 100 % programática, sin Material inflado).
-- `CallScreeningService`, `NotificationListenerService`, dos `AccessibilityService`
-  (uno mínimo y uno opcional), `VpnService`, `JobScheduler`, `NetworkStatsManager`,
-  `AppWidgetProvider`.
-- **SQLite** propio (sin Room) con cifrado a nivel de campo.
-- Cero dependencias de red: solo `androidx` + `material` para recursos.
-
----
-
-## 📁 Estructura del repositorio
+## 🏗️ Arquitectura
 
 ```
 app/src/main/java/com/cyberagent/app/
-├── MainActivity.kt                 · panel + accesos + módulos
-├── PermissionsActivity.kt           · asistente de accesos guiado
-├── AlertsActivity.kt                · historial con filtros
-├── SelfTestActivity.kt              · autodiagnóstico + comprobar enlace
-├── TrustAdvisorActivity.kt          · panel de confianza por app
-├── ShareInspectActivity.kt          · destino de "Compartir"
-├── AppListActivity.kt / AppDetailActivity.kt
-├── CallSmsShieldActivity.kt · InternetUsageActivity.kt · …
-├── core/
-│   ├── Crypto.kt (AES-GCM + Keystore) · Db.kt · Prefs.kt
-│   ├── FirewallBridge / QuarantineManager / PanicModeManager / ScheduleGuard
-│   ├── NetworkStatsReader · TrafficWatch · NetGuard · WifiAnalyzer
-│   ├── LinkInspector · DnsFilter · IocDatabase · IocUpdater · OnlineIoc
-│   ├── AppAnalyzer · ApkReputation · BatchScan · PermissionWatcher
-│   ├── TrustAdvisor · Watchdog · Exporter · HtmlReport · SelfTest
-│   └── AutoDefense · Notify · CrashLog
-├── service/  FirewallVpnService · SecurityMonitorService · CallGuardService
-│            SecurityAccessibilityService · OverlayGuardService · ScanJobService
-│            NotifGuardService
-├── receiver/ Boot · PackageChange · SMS (monitor y deliver) · MMS
-└── widget/   Panel 4×4 · estado · uso de hoy · red 7 días
+├── core/        Motor defensivo (análisis, cifrado, IoC, red, riesgo…)
+├── service/     Servicios: VPN, monitor, accesibilidad, notificaciones, escaneo
+├── receiver/    Receptores: SMS, MMS, arranque, cambios de paquete
+├── widget/      Widgets de pantalla de inicio
+├── ui/          Sistema de diseño (Ui, IconView, FlowRow, gráficas)
+└── *Activity.kt Pantallas (panel, apps, cuarentena, forense, ajustes…)
 ```
 
----
+Puntos clave del diseño:
 
-## ⚠️ Límites reales (sin vender humo)
-
-- Sin **root** ni **device owner** no se puede suspender ni desinstalar una app a la fuerza.
-- La detección de fraude (SMS, enlaces, score de apps) es **heurística**: hay falsos
-  positivos y falsos negativos. No hay motor antivirus ni ML local.
-- El cortafuegos **no inspecciona el contenido** de los paquetes: bloquea apps, no dominios.
-  El filtrado DNS del túnel solo afecta a las apps ya bloqueadas.
-- El túnel no reenvía tráfico (no es un VPN completo). El filtrado de dominios de todo el
-  móvil exigiría una pila TCP/IP propia: proyecto aparte.
-- La defensa automática depende del **JobScheduler**: en fabricantes con ahorro agresivo
-  (Xiaomi, Huawei…) hay que quitarle restricciones de batería (paso 9 del asistente).
-- **VPN + accesibilidad en la misma app no es publicable en Play.** Distribución fuera de
-  tienda, para uso propio o instalación manual asistida.
+- **Todo lo pesado va en segundo plano** (`core/Bg.kt`): leer estadísticas de red, auditar apps
+  o descifrar historial nunca bloquean la interfaz.
+- **Datos cifrados en reposo:** los campos sensibles de SQLite y todos los ajustes se guardan
+  con **AES-256-GCM** y una clave **no exportable** del Android Keystore (`core/Crypto.kt`).
+- **Sin dependencias de terceros en runtime:** solo AndroidX. Nada de analítica ni crash reporting.
+- **Cada defensa es comprobable** desde el autodiagnóstico (`core/SelfTest.kt`).
 
 ---
 
-## 🛠️ Cambios respecto a la v2.0
+## 🔐 Privacidad
 
-| v2.0 | v2.6.0 |
-|------|--------|
-| Firma de depuración | Keystore propio RSA 4096, v1+v2+v3, no debuggable |
-| Accesibilidad con acceso total | Dos servicios: mínimo (sin leer contenido) + opcional anti-overlay |
-| "IA" que no arrancaba | Asistente local determinista con MITRE ATT&CK |
-| Tráfico en claro | Solo HTTPS (`cleartextTrafficPermitted=false`) |
-| Datos en claro | AES-256-GCM + Android Keystore |
-| Permisos raros | Eliminados; accesos guiados por asistente |
-| 9 módulos anunciados | 16 defensas verificadas + autodiagnóstico de 10 pruebas |
-| Sin widgets | 4 widgets, incluido el panel 4×4 |
-| Sin informes | Informe JSON, informe HTML forense y copia cifrada |
-| Bloqueo por app | + IPv6, DNS NXDOMAIN, guardián de enlaces, permisos, horario y red |
+| | |
+|---|---|
+| **100 % local** | Ningún dato abandona el dispositivo. Sin telemetría ni servidores. |
+| **Sin cuentas** | No hay registro ni login. |
+| **Cifrado** | Historial y ajustes con AES-256-GCM + Android Keystore; copias con PBKDF2-HMAC-SHA256. |
+| **Red solo HTTPS** | `cleartextTrafficPermitted=false`. Las consultas externas (opcionales) exigen autorización. |
+| **Sin backup en la nube** | `allowBackup=false` y reglas de extracción que excluyen datos. |
+
+---
+
+## 🔑 Permisos y por qué
+
+| Permiso | Motivo |
+|---------|--------|
+| `PACKAGE_USAGE_STATS` | Medir consumo de red por app (nunca se envía a ningún sitio) |
+| `RECEIVE_SMS` / `READ_SMS` | Filtrar SMS fraudulentos (solo si eres la app de SMS) |
+| `READ_PHONE_STATE` / `READ_CALL_LOG` / `READ_CONTACTS` | Blindaje de llamadas y listas |
+| `BIND_VPN_SERVICE` | Cortafuegos local por aplicación |
+| `BIND_ACCESSIBILITY_SERVICE` | Guardia de instalación (config **mínima**: sin leer contenido) |
+| `NEARBY_WIFI_DEVICES` (y `ACCESS_FINE_LOCATION` ≤ API 32) | Analizar la seguridad de la Wi-Fi |
+| `QUERY_ALL_PACKAGES` | Auditar las apps instaladas |
+
+No se usan `KILL_BACKGROUND_PROCESSES`, ni `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`, ni
+`HIDE_OVERLAY_WINDOWS`: se sustituyeron por un servicio en primer plano bien declarado.
+
+---
+
+## ⚡ Rendimiento
+
+- Cachés con TTL para estadísticas de red y comprobación de acceso al uso.
+- Clave del Keystore cacheada (antes se abría en cada cifrado/descifrado).
+- Listas y agregados calculados en hilo de fondo; la interfaz nunca se congela.
+- Widgets con `goAsync()` para no bloquear el lanzador.
 
 ---
 
 ## 🤝 Contribuir
 
-Issues y PRs son bienvenidos. Si vas a tocar el motor defensivo, añade una comprobación al
-**autodiagnóstico** (`core/SelfTest.kt`): hay que poder demostrar que la defensa funciona.
+Issues y PRs son bienvenidos. Si tocas el motor defensivo, **añade una comprobación al
+autodiagnóstico** (`core/SelfTest.kt`): hay que poder demostrar que la defensa funciona.
 
 ---
 
 ## ⚠️ Aviso legal
 
-Herramienta de defensa para tu propio dispositivo o con autorización expresa de su dueño.
-No incluye capacidades ofensivas y el asistente rechaza generar contenido malicioso.
+Herramienta de defensa para tu propio dispositivo o con autorización expresa de su dueño. No
+incluye capacidades ofensivas y el asistente rechaza generar contenido malicioso.
+La VPN + accesibilidad en la misma app no es publicable en Play: la distribución es directa.
 
 ---
 
@@ -250,4 +230,4 @@ No incluye capacidades ofensivas y el asistente rechaza generar contenido malici
 
 Open source (ver [`LICENSE`](./LICENSE)).
 
-`v2.6.0` · Android 8.0+ · 100 % local · 0 telemetría · **creado por Andrés Mag (Cuba)**
+<div align="center"><sub><code>v2.6.0</code> · Android 8.0+ · 100 % local · 0 telemetría · <b>creado por Andrés Mag (Cuba)</b></sub></div>
