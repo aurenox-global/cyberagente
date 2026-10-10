@@ -1,0 +1,698 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.cyberagent.app"
+4    android:versionCode="14"
+5    android:versionName="2.5.1" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="35" />
+10
+11    <!-- ══ Red ══════════════════════════════════════════════════════ -->
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:6:5-67
+12-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:6:22-64
+13    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+13-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:7:5-79
+13-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:7:22-76
+14    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+14-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:8:5-76
+14-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:8:22-73
+15    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+15-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:9:5-79
+15-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:9:22-76
+16    <!--
+17         En Android 12 y anteriores la lectura de redes cercanas (SSID/cifrado)
+18         depende de la ubicación; se limita a <=32 y en 13+ se usa NEARBY_WIFI_DEVICES.
+19    -->
+20    <uses-permission
+20-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:12:5-13:38
+21        android:name="android.permission.ACCESS_FINE_LOCATION"
+21-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:12:22-76
+22        android:maxSdkVersion="32" />
+22-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:13:9-35
+23    <uses-permission
+23-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:14:5-16:32
+24        android:name="android.permission.NEARBY_WIFI_DEVICES"
+24-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:14:22-75
+25        android:usesPermissionFlags="neverForLocation" />
+25-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:15:9-55
+26
+27    <!-- ══ Blindaje de llamadas y SMS (permisos REALES del módulo) ═══ -->
+28    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+28-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:19:5-75
+28-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:19:22-72
+29    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+29-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:20:5-72
+29-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:20:22-69
+30    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+30-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:21:5-70
+30-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:21:22-67
+31    <uses-permission android:name="android.permission.READ_SMS" />
+31-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:22:5-67
+31-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:22:22-64
+32    <uses-permission android:name="android.permission.RECEIVE_MMS" />
+32-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:23:5-70
+32-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:23:22-67
+33    <uses-permission android:name="android.permission.READ_CONTACTS" />
+33-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:24:5-72
+33-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:24:22-69
+34
+35    <!-- ══ Auditoría de apps ═════════════════════════════════════════ -->
+36    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+36-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:27:5-28:53
+36-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:27:22-74
+37    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
+37-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:29:5-30:47
+37-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:29:22-75
+38
+39    <!-- ══ Servicios y persistencia ══════════════════════════════════ -->
+40    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+40-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:33:5-77
+40-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:33:22-74
+41    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+41-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:34:5-89
+41-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:34:22-86
+42    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" />
+42-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:35:5-93
+42-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:35:22-90
+43    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+43-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:36:5-81
+43-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:36:22-78
+44    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+44-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:37:5-77
+44-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:37:22-74
+45    <uses-permission android:name="android.permission.WAKE_LOCK" />
+45-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:38:5-68
+45-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:38:22-65
+46    <uses-permission android:name="android.permission.VIBRATE" />
+46-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:39:5-66
+46-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:39:22-63
+47    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+47-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:40:5-80
+47-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:40:22-77
+48    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+48-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:41:5-85
+48-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:41:22-82
+49
+50    <!--
+51         Se usan como atributo android:permission en los componentes, no como uses-permission:
+52         BIND_VPN_SERVICE · BIND_ACCESSIBILITY_SERVICE · BIND_SCREENING_SERVICE
+53    -->
+54
+55    <uses-feature
+55-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:46:5-83
+56        android:name="android.hardware.wifi"
+56-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:46:19-55
+57        android:required="false" />
+57-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:46:56-80
+58    <uses-feature
+58-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:47:5-88
+59        android:name="android.hardware.telephony"
+59-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:47:19-60
+60        android:required="false" />
+60-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:47:61-85
+61
+62    <permission
+62-->[androidx.core:core:1.13.1] /home/zota/.gradle/caches/8.13/transforms/171afbaa89f7ab59ab4fdd7c43c5b54d/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
+63        android:name="com.cyberagent.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+63-->[androidx.core:core:1.13.1] /home/zota/.gradle/caches/8.13/transforms/171afbaa89f7ab59ab4fdd7c43c5b54d/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
+64        android:protectionLevel="signature" />
+64-->[androidx.core:core:1.13.1] /home/zota/.gradle/caches/8.13/transforms/171afbaa89f7ab59ab4fdd7c43c5b54d/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
+65
+66    <uses-permission android:name="com.cyberagent.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+66-->[androidx.core:core:1.13.1] /home/zota/.gradle/caches/8.13/transforms/171afbaa89f7ab59ab4fdd7c43c5b54d/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
+66-->[androidx.core:core:1.13.1] /home/zota/.gradle/caches/8.13/transforms/171afbaa89f7ab59ab4fdd7c43c5b54d/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
+67
+68    <application
+68-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:49:5-275:19
+69        android:name="com.cyberagent.app.App"
+69-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:50:9-28
+70        android:allowBackup="false"
+70-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:51:9-36
+71        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+71-->[androidx.core:core:1.13.1] /home/zota/.gradle/caches/8.13/transforms/171afbaa89f7ab59ab4fdd7c43c5b54d/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
+72        android:dataExtractionRules="@xml/data_extraction_rules"
+72-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:52:9-65
+73        android:extractNativeLibs="false"
+74        android:fullBackupContent="@xml/backup_rules"
+74-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:53:9-54
+75        android:icon="@drawable/ic_launcher"
+75-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:54:9-45
+76        android:label="@string/app_name"
+76-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:55:9-41
+77        android:networkSecurityConfig="@xml/network_security_config"
+77-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:56:9-69
+78        android:supportsRtl="true"
+78-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:57:9-35
+79        android:theme="@style/Theme.CyberAgent"
+79-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:58:9-48
+80        android:usesCleartextTraffic="false" >
+80-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:59:9-45
+81
+82        <!-- ── Actividades ─────────────────────────────────────────── -->
+83        <activity
+83-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:63:9-71:20
+84            android:name="com.cyberagent.app.MainActivity"
+84-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:64:13-41
+85            android:exported="true"
+85-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:65:13-36
+86            android:launchMode="singleTop" >
+86-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:66:13-43
+87            <intent-filter>
+87-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:67:13-70:29
+88                <action android:name="android.intent.action.MAIN" />
+88-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:68:17-69
+88-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:68:25-66
+89
+90                <category android:name="android.intent.category.LAUNCHER" />
+90-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:69:17-77
+90-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:69:27-74
+91            </intent-filter>
+92        </activity>
+93        <activity
+93-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:73:9-82
+94            android:name="com.cyberagent.app.PermissionsActivity"
+94-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:73:19-54
+95            android:exported="false" />
+95-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:73:55-79
+96        <activity
+96-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:74:9-77
+97            android:name="com.cyberagent.app.AlertsActivity"
+97-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:74:19-49
+98            android:exported="false" />
+98-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:74:50-74
+99        <activity
+99-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:75:9-79
+100            android:name="com.cyberagent.app.SelfTestActivity"
+100-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:75:19-51
+101            android:exported="false" />
+101-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:75:52-76
+102        <activity
+102-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:76:9-83
+103            android:name="com.cyberagent.app.TrustAdvisorActivity"
+103-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:76:19-55
+104            android:exported="false" />
+104-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:76:56-80
+105
+106        <!-- Compartir un enlace desde cualquier app → comprobarlo aquí. -->
+107        <activity
+107-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:79:9-93:20
+108            android:name="com.cyberagent.app.ShareInspectActivity"
+108-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:79:19-55
+109            android:exported="true"
+109-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:79:56-79
+110            android:label="@string/share_label" >
+110-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:80:13-48
+111            <intent-filter>
+111-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:81:13-85:29
+112                <action android:name="android.intent.action.SEND" />
+112-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:82:17-69
+112-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:82:25-66
+113
+114                <category android:name="android.intent.category.DEFAULT" />
+114-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:83:17-76
+114-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:83:27-73
+115
+116                <data android:mimeType="text/plain" />
+116-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:84:17-55
+116-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:84:23-52
+117            </intent-filter>
+118            <intent-filter>
+118-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:86:13-92:29
+119                <action android:name="android.intent.action.VIEW" />
+119-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:87:17-69
+119-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:87:25-66
+120
+121                <category android:name="android.intent.category.DEFAULT" />
+121-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:83:17-76
+121-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:83:27-73
+122                <category android:name="android.intent.category.BROWSABLE" />
+122-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:89:17-78
+122-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:89:27-75
+123
+124                <data android:scheme="http" />
+124-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:84:17-55
+124-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:90:23-44
+125                <data android:scheme="https" />
+125-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:84:17-55
+125-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:90:23-44
+126            </intent-filter>
+127        </activity>
+128        <activity
+128-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:94:9-78
+129            android:name="com.cyberagent.app.AppListActivity"
+129-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:94:19-50
+130            android:exported="false" />
+130-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:94:51-75
+131        <activity
+131-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:95:9-80
+132            android:name="com.cyberagent.app.AppDetailActivity"
+132-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:95:19-52
+133            android:exported="false" />
+133-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:95:53-77
+134        <activity
+134-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:96:9-84
+135            android:name="com.cyberagent.app.CallSmsShieldActivity"
+135-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:96:19-56
+136            android:exported="false" />
+136-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:96:57-81
+137        <activity
+137-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:97:9-84
+138            android:name="com.cyberagent.app.InternetUsageActivity"
+138-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:97:19-56
+139            android:exported="false" />
+139-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:97:57-81
+140        <activity
+140-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:98:9-90
+141            android:name="com.cyberagent.app.InternetUsageDetailActivity"
+141-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:98:19-62
+142            android:exported="false" />
+142-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:98:63-87
+143        <activity
+143-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:99:9-87
+144            android:name="com.cyberagent.app.QuarantineCenterActivity"
+144-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:99:19-59
+145            android:exported="false" />
+145-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:99:60-84
+146        <activity
+146-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:100:9-87
+147            android:name="com.cyberagent.app.ForensicVerifierActivity"
+147-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:100:19-59
+148            android:exported="false" />
+148-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:100:60-84
+149        <activity
+149-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:101:9-91
+150            android:name="com.cyberagent.app.WifiSecurityAnalysisActivity"
+150-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:101:19-63
+151            android:exported="false" />
+151-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:101:64-88
+152        <activity
+152-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:102:9-85
+153            android:name="com.cyberagent.app.MetricsSummaryActivity"
+153-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:102:19-57
+154            android:exported="false" />
+154-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:102:58-82
+155        <activity
+155-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:103:9-80
+156            android:name="com.cyberagent.app.AssistantActivity"
+156-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:103:19-52
+157            android:exported="false" />
+157-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:103:53-77
+158        <activity
+158-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:104:9-87
+159            android:name="com.cyberagent.app.SecuritySettingsActivity"
+159-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:104:19-59
+160            android:exported="false" />
+160-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:104:60-84
+161
+162        <!-- ── Monitor de seguridad (servicio en primer plano) ─────── -->
+163        <service
+163-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:107:9-114:19
+164            android:name="com.cyberagent.app.service.SecurityMonitorService"
+164-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:108:13-59
+165            android:exported="false"
+165-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:109:13-37
+166            android:foregroundServiceType="specialUse" >
+166-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:110:13-55
+167            <property
+167-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:111:13-113:106
+168                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+168-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:112:17-76
+169                android:value="Security monitoring of device state, network usage and app permissions" />
+169-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:113:17-103
+170        </service>
+171
+172        <!-- ── Cortafuegos VPN local (bloqueo por aplicación) ──────── -->
+173        <service
+173-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:117:9-125:19
+174            android:name="com.cyberagent.app.service.FirewallVpnService"
+174-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:118:13-55
+175            android:exported="false"
+175-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:119:13-37
+176            android:foregroundServiceType="systemExempted"
+176-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:120:13-59
+177            android:permission="android.permission.BIND_VPN_SERVICE" >
+177-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:121:13-69
+178            <intent-filter>
+178-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:122:13-124:29
+179                <action android:name="android.net.VpnService" />
+179-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:123:17-65
+179-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:123:25-62
+180            </intent-filter>
+181        </service>
+182
+183        <!--
+184             ── Servicio de accesibilidad MINIMIZADO ─────────────────
+185             Solo eventos de cambio de ventana, SIN canRetrieveWindowContent
+186             y SIN FLAG_REQUEST_FILTER_KEY_EVENTS (a diferencia de la v2.0).
+187        -->
+188        <service
+188-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:130:9-141:19
+189            android:name="com.cyberagent.app.service.SecurityAccessibilityService"
+189-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:131:13-65
+190            android:exported="true"
+190-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:132:13-36
+191            android:label="@string/accessibility_label"
+191-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:133:13-56
+192            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+192-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:134:13-79
+193            <intent-filter>
+193-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:135:13-137:29
+194                <action android:name="android.accessibilityservice.AccessibilityService" />
+194-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:136:17-92
+194-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:136:25-89
+195            </intent-filter>
+196
+197            <meta-data
+197-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:138:13-140:72
+198                android:name="android.accessibilityservice"
+198-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:139:17-60
+199                android:resource="@xml/accessibility_service_config" />
+199-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:140:17-69
+200        </service>
+201
+202        <!-- ── Filtro de llamadas REAL (API 24+) ───────────────────── -->
+203        <service
+203-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:144:9-151:19
+204            android:name="com.cyberagent.app.service.CallGuardService"
+204-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:145:13-53
+205            android:exported="true"
+205-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:146:13-36
+206            android:permission="android.permission.BIND_SCREENING_SERVICE" >
+206-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:147:13-75
+207            <intent-filter>
+207-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:148:13-150:29
+208                <action android:name="android.telecom.CallScreeningService" />
+208-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:149:17-79
+208-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:149:25-76
+209            </intent-filter>
+210        </service>
+211
+212        <!-- ── SMS: monitor (aviso) y filtrado (app de SMS por defecto) ── -->
+213        <receiver
+213-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:154:9-161:20
+214            android:name="com.cyberagent.app.receiver.SmsMonitorReceiver"
+214-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:155:13-56
+215            android:exported="true"
+215-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:156:13-36
+216            android:permission="android.permission.RECEIVE_SMS" >
+216-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:157:13-64
+217            <intent-filter android:priority="900" >
+217-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:158:13-160:29
+217-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:158:28-50
+218                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+218-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:159:17-82
+218-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:159:25-79
+219            </intent-filter>
+220        </receiver>
+221        <receiver
+221-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:163:9-170:20
+222            android:name="com.cyberagent.app.receiver.SmsDeliverReceiver"
+222-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:164:13-56
+223            android:exported="true"
+223-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:165:13-36
+224            android:permission="android.permission.BROADCAST_SMS" >
+224-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:166:13-66
+225            <intent-filter android:priority="999" >
+225-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:167:13-169:29
+225-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:167:28-50
+226                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+226-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:168:17-81
+226-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:168:25-78
+227            </intent-filter>
+228        </receiver>
+229        <receiver
+229-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:172:9-180:20
+230            android:name="com.cyberagent.app.receiver.MmsReceiver"
+230-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:173:13-49
+231            android:exported="true"
+231-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:174:13-36
+232            android:permission="android.permission.BROADCAST_WAP_PUSH" >
+232-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:175:13-71
+233            <intent-filter>
+233-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:176:13-179:29
+234                <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
+234-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:177:17-86
+234-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:177:25-83
+235
+236                <data android:mimeType="application/vnd.wap.mms-message" />
+236-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:84:17-55
+236-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:84:23-52
+237            </intent-filter>
+238        </receiver>
+239        <receiver
+239-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:182:9-190:20
+240            android:name="com.cyberagent.app.receiver.BootReceiver"
+240-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:183:13-50
+241            android:exported="false" >
+241-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:184:13-37
+242            <intent-filter>
+242-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:185:13-189:29
+243                <action android:name="android.intent.action.BOOT_COMPLETED" />
+243-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:186:17-79
+243-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:186:25-76
+244                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+244-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:187:17-86
+244-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:187:25-83
+245                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+245-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:188:17-84
+245-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:188:25-81
+246            </intent-filter>
+247        </receiver>
+248        <receiver
+248-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:192:9-200:20
+249            android:name="com.cyberagent.app.receiver.PackageChangeReceiver"
+249-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:193:13-59
+250            android:exported="false" >
+250-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:194:13-37
+251            <intent-filter>
+251-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:195:13-199:29
+252                <action android:name="android.intent.action.PACKAGE_ADDED" />
+252-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:196:17-78
+252-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:196:25-75
+253                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+253-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:197:17-81
+253-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:197:25-78
+254
+255                <data android:scheme="package" />
+255-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:84:17-55
+255-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:90:23-44
+256            </intent-filter>
+257        </receiver>
+258
+259        <!-- ── Defensa automática: trabajo periódico del sistema ───── -->
+260        <service
+260-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:203:9-206:72
+261            android:name="com.cyberagent.app.service.ScanJobService"
+261-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:204:13-51
+262            android:exported="false"
+262-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:205:13-37
+263            android:permission="android.permission.BIND_JOB_SERVICE" />
+263-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:206:13-69
+264
+265        <!-- ── Guardián de notificaciones (anti-phishing fuera de SMS) ── -->
+266        <service
+266-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:209:9-217:19
+267            android:name="com.cyberagent.app.service.NotifGuardService"
+267-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:210:13-54
+268            android:exported="true"
+268-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:211:13-36
+269            android:label="@string/notif_guard_label"
+269-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:212:13-54
+270            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" >
+270-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:213:13-87
+271            <intent-filter>
+271-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:214:13-216:29
+272                <action android:name="android.service.notification.NotificationListenerService" />
+272-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:215:17-99
+272-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:215:25-96
+273            </intent-filter>
+274        </service>
+275
+276        <!--
+277             ── Guardián de superposiciones (OPCIONAL) ────────────────
+278             A diferencia del servicio mínimo, este sí lee las ventanas para
+279             detectar pantallas falsas sobre otras apps. Solo se activa si el
+280             usuario lo decide en Ajustes.
+281        -->
+282        <service
+282-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:223:9-234:19
+283            android:name="com.cyberagent.app.service.OverlayGuardService"
+283-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:224:13-56
+284            android:exported="true"
+284-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:225:13-36
+285            android:label="@string/overlay_guard_label"
+285-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:226:13-56
+286            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+286-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:227:13-79
+287            <intent-filter>
+287-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:135:13-137:29
+288                <action android:name="android.accessibilityservice.AccessibilityService" />
+288-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:136:17-92
+288-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:136:25-89
+289            </intent-filter>
+290
+291            <meta-data
+291-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:138:13-140:72
+292                android:name="android.accessibilityservice"
+292-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:139:17-60
+293                android:resource="@xml/overlay_guard_config" />
+293-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:140:17-69
+294        </service>
+295
+296        <!-- ── Widgets ─────────────────────────────────────────────── -->
+297        <receiver
+297-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:237:9-244:20
+298            android:name="com.cyberagent.app.widget.AppStatsWidget"
+298-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:237:19-56
+299            android:exported="false" >
+299-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:237:57-81
+300            <intent-filter>
+300-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:238:13-240:29
+301                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+301-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:239:17-84
+301-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:239:25-81
+302            </intent-filter>
+303
+304            <meta-data
+304-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:241:13-243:61
+305                android:name="android.appwidget.provider"
+305-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:242:17-58
+306                android:resource="@xml/widget_stats_info" />
+306-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:243:17-58
+307        </receiver>
+308        <receiver
+308-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:246:9-253:20
+309            android:name="com.cyberagent.app.widget.InternetUsageWidgetProvider"
+309-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:246:19-69
+310            android:exported="false" >
+310-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:246:70-94
+311            <intent-filter>
+311-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:238:13-240:29
+312                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+312-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:239:17-84
+312-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:239:25-81
+313            </intent-filter>
+314
+315            <meta-data
+315-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:241:13-243:61
+316                android:name="android.appwidget.provider"
+316-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:242:17-58
+317                android:resource="@xml/widget_usage_info" />
+317-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:243:17-58
+318        </receiver>
+319        <receiver
+319-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:255:9-262:20
+320            android:name="com.cyberagent.app.widget.InternetUsageDailyWidgetProvider"
+320-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:255:19-74
+321            android:exported="false" >
+321-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:255:75-99
+322            <intent-filter>
+322-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:238:13-240:29
+323                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+323-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:239:17-84
+323-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:239:25-81
+324            </intent-filter>
+325
+326            <meta-data
+326-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:241:13-243:61
+327                android:name="android.appwidget.provider"
+327-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:242:17-58
+328                android:resource="@xml/widget_daily_info" />
+328-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:243:17-58
+329        </receiver>
+330
+331        <!-- ── Widget 4x4: panel de estado completo ────────────────── -->
+332        <receiver
+332-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:265:9-273:20
+333            android:name="com.cyberagent.app.widget.SecurityDashboardWidget"
+333-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:265:19-65
+334            android:exported="false" >
+334-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:265:66-90
+335            <intent-filter>
+335-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:266:13-269:29
+336                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+336-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:239:17-84
+336-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:239:25-81
+337                <action android:name="com.cyberagent.app.action.WIDGET_SCAN" />
+337-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:268:17-80
+337-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:268:25-77
+338            </intent-filter>
+339
+340            <meta-data
+340-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:241:13-243:61
+341                android:name="android.appwidget.provider"
+341-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:242:17-58
+342                android:resource="@xml/widget_dashboard_info" />
+342-->/home/zota/cyberagent-repo/app/src/main/AndroidManifest.xml:243:17-58
+343        </receiver>
+344
+345        <provider
+345-->[androidx.emoji2:emoji2:1.3.0] /home/zota/.gradle/caches/8.13/transforms/bd631a5d982a97d634f37da504baaf62/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+346            android:name="androidx.startup.InitializationProvider"
+346-->[androidx.emoji2:emoji2:1.3.0] /home/zota/.gradle/caches/8.13/transforms/bd631a5d982a97d634f37da504baaf62/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+347            android:authorities="com.cyberagent.app.androidx-startup"
+347-->[androidx.emoji2:emoji2:1.3.0] /home/zota/.gradle/caches/8.13/transforms/bd631a5d982a97d634f37da504baaf62/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+348            android:exported="false" >
+348-->[androidx.emoji2:emoji2:1.3.0] /home/zota/.gradle/caches/8.13/transforms/bd631a5d982a97d634f37da504baaf62/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+349            <meta-data
+349-->[androidx.emoji2:emoji2:1.3.0] /home/zota/.gradle/caches/8.13/transforms/bd631a5d982a97d634f37da504baaf62/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+350                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+350-->[androidx.emoji2:emoji2:1.3.0] /home/zota/.gradle/caches/8.13/transforms/bd631a5d982a97d634f37da504baaf62/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+351                android:value="androidx.startup" />
+351-->[androidx.emoji2:emoji2:1.3.0] /home/zota/.gradle/caches/8.13/transforms/bd631a5d982a97d634f37da504baaf62/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+352            <meta-data
+352-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/zota/.gradle/caches/8.13/transforms/eb58634e4b6f90921254df59cc8deb3b/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:29:13-31:52
+353                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+353-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/zota/.gradle/caches/8.13/transforms/eb58634e4b6f90921254df59cc8deb3b/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:30:17-78
+354                android:value="androidx.startup" />
+354-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/zota/.gradle/caches/8.13/transforms/eb58634e4b6f90921254df59cc8deb3b/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:31:17-49
+355            <meta-data
+355-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+356                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+356-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+357                android:value="androidx.startup" />
+357-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+358        </provider>
+359
+360        <receiver
+360-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+361            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+361-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+362            android:directBootAware="false"
+362-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+363            android:enabled="true"
+363-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+364            android:exported="true"
+364-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+365            android:permission="android.permission.DUMP" >
+365-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+366            <intent-filter>
+366-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+367                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+367-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+367-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+368            </intent-filter>
+369            <intent-filter>
+369-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+370                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+370-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+370-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+371            </intent-filter>
+372            <intent-filter>
+372-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+373                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+373-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+373-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+374            </intent-filter>
+375            <intent-filter>
+375-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+376                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+376-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+376-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/zota/.gradle/caches/8.13/transforms/bfdba6a0e1c7d045c00d7330122607e2/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+377            </intent-filter>
+378        </receiver>
+379    </application>
+380
+381</manifest>

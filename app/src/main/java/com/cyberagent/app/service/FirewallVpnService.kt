@@ -51,6 +51,9 @@ class FirewallVpnService : VpnService() {
     private fun startTunnel() {
         val blocked = PanicModeManager.effectiveBlockList(this, installedUserApps())
         if (blocked.isEmpty()) {
+            // Sin apps que bloquear no hay túnel: se desactiva el estado para que
+            // el vigilante no avise de un «cortafuegos activo sin túnel» falso.
+            Prefs.firewallEnabled = false
             stopSelf()
             return
         }
@@ -76,6 +79,7 @@ class FirewallVpnService : VpnService() {
             }
         }
         if (count == 0) {
+            Prefs.firewallEnabled = false
             stopSelf()
             return
         }

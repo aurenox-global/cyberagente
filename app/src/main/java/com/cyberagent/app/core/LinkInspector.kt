@@ -120,7 +120,12 @@ object LinkInspector {
         }
 
         // 7. Dominio recién creado, consulta RDAP OPTATIVA.
-        if (ctx != null && Prefs.rdapEnabled) {
+        //    OJO: hace red (HttpURLConnection). inspect() se invoca desde los
+        //    receptores de SMS/notificaciones (hilo principal), así que solo se
+        //    consulta RDAP cuando NO estamos en el hilo principal; si no,
+        //    lanzaría NetworkOnMainThreadException y tumbaría el receptor.
+        //    Desde el verificador/analizador (segundo plano) sí se ejecuta.
+        if (Prefs.rdapEnabled && !isMainThread()) {
             val ageDays = rdapAgeDays(host)
             if (ageDays in 0..30) {
                 reasons.add("Dominio creado hace $ageDays días (los de phishing son nuevos).")
@@ -141,6 +146,13 @@ object LinkInspector {
             url, host, severity != "INFO", severity, reasons,
             "Local (IoC ${IocDatabase.version})" + if (Prefs.rdapEnabled) " + RDAP" else ""
         )
+    }
+
+    /** ¿Estamos en el hilo principal? (protege las consultas RDAP de red). */
+    private fun isMainThread(): Boolean = try {
+        android.os.Looper.myLooper() == android.os.Looper.getMainLooper()
+    } catch (t: Throwable) {
+        true
     }
 
     /**

@@ -1,0 +1,115 @@
+{
+  "_comment": "Base local de indicadores (IoC). Se amplía sustituyendo este fichero o añadiendo entradas. Los hashes y dominios son públicos/de prueba y sirven como vectores de verificación del motor.",
+  "version": "2026.09.2",
+  "hashes": [
+    {
+      "sha256": "275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f",
+      "name": "EICAR-Test-File",
+      "family": "Test (inofensivo)",
+      "severity": "MEDIA",
+      "mitre": "T1204",
+      "note": "Fichero de prueba estándar de la industria antivirus. Detectarlo confirma que el motor de firmas funciona."
+    },
+    {
+      "sha256": "131f95c51cc819465fa1797f6ccacf9d494aaaff46fa3eac73ae63ffbdfd8267",
+      "name": "PUA-Demo-Installer",
+      "family": "Demo (adware)",
+      "severity": "ALTA",
+      "mitre": "T1176",
+      "note": "Entrada de ejemplo: instalador con publicidad agresiva. Sirve para probar el veredicto MALICIOSO."
+    }
+  ],
+  "domains": [
+    {
+      "host": "malware.test",
+      "family": "Prueba interna",
+      "severity": "ALTA",
+      "mitre": "T1566",
+      "note": "Dominio de prueba usado por el autodiagnóstico para comprobar la detección."
+    },
+    {
+      "host": "phishing.test",
+      "family": "Phishing (prueba)",
+      "severity": "ALTA",
+      "mitre": "T1566",
+      "note": "Dominio de prueba para el inspector de enlaces."
+    },
+    {
+      "host": "doubleclick.net",
+      "family": "Rastreadores",
+      "severity": "MEDIA",
+      "mitre": "T1005",
+      "note": "Publicidad y seguimiento entre sitios."
+    },
+    {
+      "host": "googlesyndication.com",
+      "family": "Rastreadores",
+      "severity": "MEDIA",
+      "mitre": "T1005",
+      "note": "Red de anuncios y seguimiento."
+    },
+    {
+      "host": "adservice.google.com",
+      "family": "Rastreadores",
+      "severity": "MEDIA",
+      "mitre": "T1005",
+      "note": "Servicio de anuncios."
+    },
+    {
+      "host": "scorecardresearch.com",
+      "family": "Rastreadores",
+      "severity": "MEDIA",
+      "mitre": "T1005",
+      "note": "Medición de audiencia y perfilado."
+    },
+    {
+      "host": "criteo.com",
+      "family": "Rastreadores",
+      "severity": "MEDIA",
+      "mitre": "T1005",
+      "note": "Publicidad personalizada."
+    },
+    {
+      "host": "taboola.com",
+      "family": "Rastreadores",
+      "severity": "MEDIA",
+      "mitre": "T1005",
+      "note": "Publicidad nativa y contenidos recomendados."
+    },
+    {
+      "host": "outbrain.com",
+      "family": "Rastreadores",
+      "severity": "MEDIA",
+      "mitre": "T1005",
+      "note": "Publicidad nativa."
+    },
+    {
+      "host": "app-measurement.com",
+      "family": "Rastreadores",
+      "severity": "MEDIA",
+      "mitre": "T1005",
+      "note": "Analítica de aplicaciones (Firebase)."
+    },
+    {
+      "host": "adjust.com",
+      "family": "Rastreadores",
+      "severity": "MEDIA",
+      "mitre": "T1005",
+      "note": "Atribución de instalaciones de apps."
+    },
+    {
+      "host": "branch.io",
+      "family": "Rastreadores",
+      "severity": "MEDIA",
+      "mitre": "T1005",
+      "note": "Enlaces y atribución de instalaciones."
+    },
+    {
+      "host": "tracking.example-bad.test",
+      "family": "Prueba interna",
+      "severity": "ALTA",
+      "mitre": "T1005",
+      "note": "Ejemplo de subdominio de pruebas para el filtro DNS."
+    }
+  ]
+}

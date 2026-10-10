@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="CYBERAGENT"
-            android:textColor="#00FFD6"
+            android:textColor="#3FE0A6"
             android:textSize="12sp"
             android:letterSpacing="0.10"
             android:typeface="monospace"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SEGURO"
-            android:textColor="#00FF88"
+            android:textColor="#4ADE80"
             android:textSize="11sp"
             android:typeface="monospace"
             android:maxLines="1" />
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textColor="#E8FFF9"
+                android:textColor="#F2FBF7"
                 android:textSize="22sp"
                 android:typeface="monospace" />
 
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ESCANEOS"
-                android:textColor="#8FB3BF"
+                android:textColor="#9AA8A2"
                 android:textSize="9sp"
                 android:typeface="monospace" />
         </LinearLayout>
@@ -77,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textColor="#E8FFF9"
+                android:textColor="#F2FBF7"
                 android:textSize="22sp"
                 android:typeface="monospace" />
 
@@ -85,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="APPS ANALIZADAS"
-                android:textColor="#8FB3BF"
+                android:textColor="#9AA8A2"
                 android:textSize="9sp"
                 android:typeface="monospace" />
         </LinearLayout>
@@ -108,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textColor="#FFC44D"
+                android:textColor="#FFC24D"
                 android:textSize="22sp"
                 android:typeface="monospace" />
 
@@ -116,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="EN CUARENTENA"
-                android:textColor="#8FB3BF"
+                android:textColor="#9AA8A2"
                 android:textSize="9sp"
                 android:typeface="monospace" />
         </LinearLayout>
@@ -132,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textColor="#FF3B5C"
+                android:textColor="#FF5D6C"
                 android:textSize="22sp"
                 android:typeface="monospace" />
 
@@ -140,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ALERTAS 24 H"
-                android:textColor="#8FB3BF"
+                android:textColor="#9AA8A2"
                 android:textSize="9sp"
                 android:typeface="monospace" />
         </LinearLayout>
@@ -151,7 +151,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="CON RED EN LOS ÚLTIMOS 15 MIN"
-        android:textColor="#4A6B77"
+        android:textColor="#5E6C67"
         android:textSize="9sp"
         android:typeface="monospace" />
 
@@ -160,7 +160,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="—"
-        android:textColor="#E8FFF9"
+        android:textColor="#F2FBF7"
         android:textSize="11sp"
         android:typeface="monospace"
         android:maxLines="1"
@@ -171,7 +171,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
-        android:textColor="#8FB3BF"
+        android:textColor="#9AA8A2"
         android:textSize="11sp"
         android:typeface="monospace"
         android:maxLines="1"
@@ -182,7 +182,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
-        android:textColor="#8FB3BF"
+        android:textColor="#9AA8A2"
         android:textSize="11sp"
         android:typeface="monospace"
         android:maxLines="1"
@@ -201,7 +201,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Sin escaneos"
-            android:textColor="#4A6B77"
+            android:textColor="#5E6C67"
             android:textSize="9sp"
             android:typeface="monospace"
             android:maxLines="1" />
@@ -219,7 +219,7 @@
             android:background="@drawable/widget_btn"
             android:text="Escanear"
             android:textAllCaps="false"
-            android:textColor="#00FFD6"
+            android:textColor="#3FE0A6"
             android:textSize="10sp" />
 
         <Button
@@ -236,7 +236,7 @@
             android:background="@drawable/widget_btn"
             android:text="Abrir"
             android:textAllCaps="false"
-            android:textColor="#00FFD6"
+            android:textColor="#3FE0A6"
             android:textSize="10sp" />
     </LinearLayout>
 </LinearLayout>

@@ -1,0 +1,66 @@
+[
+    {
+        "merged": "com.cyberagent.app-debug-32:/xml_widget_usage_info.xml.flat",
+        "source": "com.cyberagent.app-main-34:/xml/widget_usage_info.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/drawable_widget_bg.xml.flat",
+        "source": "com.cyberagent.app-main-34:/drawable/widget_bg.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/xml_widget_stats_info.xml.flat",
+        "source": "com.cyberagent.app-main-34:/xml/widget_stats_info.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/xml_overlay_guard_config.xml.flat",
+        "source": "com.cyberagent.app-main-34:/xml/overlay_guard_config.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/xml_widget_daily_info.xml.flat",
+        "source": "com.cyberagent.app-main-34:/xml/widget_daily_info.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/drawable_widget_btn.xml.flat",
+        "source": "com.cyberagent.app-main-34:/drawable/widget_btn.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/layout_widget_usage.xml.flat",
+        "source": "com.cyberagent.app-main-34:/layout/widget_usage.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/drawable_ic_launcher.xml.flat",
+        "source": "com.cyberagent.app-main-34:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/xml_backup_rules.xml.flat",
+        "source": "com.cyberagent.app-main-34:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/xml_accessibility_service_config.xml.flat",
+        "source": "com.cyberagent.app-main-34:/xml/accessibility_service_config.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/layout_widget_daily.xml.flat",
+        "source": "com.cyberagent.app-main-34:/layout/widget_daily.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/layout_widget_dashboard.xml.flat",
+        "source": "com.cyberagent.app-main-34:/layout/widget_dashboard.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/xml_widget_dashboard_info.xml.flat",
+        "source": "com.cyberagent.app-main-34:/xml/widget_dashboard_info.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/xml_network_security_config.xml.flat",
+        "source": "com.cyberagent.app-main-34:/xml/network_security_config.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/layout_widget_stats.xml.flat",
+        "source": "com.cyberagent.app-main-34:/layout/widget_stats.xml"
+    },
+    {
+        "merged": "com.cyberagent.app-debug-32:/xml_data_extraction_rules.xml.flat",
+        "source": "com.cyberagent.app-main-34:/xml/data_extraction_rules.xml"
+    }
+]

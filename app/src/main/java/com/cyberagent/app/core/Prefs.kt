@@ -73,6 +73,16 @@ object Prefs {
     fun addQuarantine(pkg: String) = setStrings(K_QUARANTINE, quarantine() + pkg)
     fun removeQuarantine(pkg: String) = setStrings(K_QUARANTINE, quarantine() - pkg)
 
+    /**
+     * Firmas (SHA-256 del certificado) marcadas de CONFIANZA por el usuario.
+     * Una app firmada con una de estas no se considera sospechosa aunque pida
+     * muchos permisos: es la «whitelist por firma» que pide el motor de riesgo.
+     */
+    fun trustedSigners(): Set<String> = getStrings(K_TRUST_SIGNERS)
+    fun trustSigner(hash: String) = setStrings(K_TRUST_SIGNERS, trustedSigners() + hash.lowercase())
+    fun untrustSigner(hash: String) = setStrings(K_TRUST_SIGNERS, trustedSigners() - hash.lowercase())
+    fun isTrustedSigner(hash: String): Boolean = trustedSigners().contains(hash.lowercase())
+
     // ── Ajustes ──────────────────────────────────────────────────────
     /** Sensibilidad de alertas: baja | media | alta */
     var sensitivity: String
@@ -246,6 +256,7 @@ object Prefs {
     private const val K_BLOCK_PKGS = "block_pkgs"
     private const val K_TRUSTED = "trusted_pkgs"
     private const val K_QUARANTINE = "quarantine"
+    private const val K_TRUST_SIGNERS = "trust_signers"
     private const val K_SENSITIVITY = "sensitivity"
     private const val K_SMS_SHIELD = "sms_shield"
     private const val K_CALL_SHIELD = "call_shield"

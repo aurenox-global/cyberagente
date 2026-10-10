@@ -1,0 +1,32 @@
+<variant
+    name="debug"
+    package="com.cyberagent.app"
+    minSdkVersion="26"
+    targetSdkVersion="35"
+    mergedManifest="build/intermediates/merged_manifest/debug/processDebugMainManifest/AndroidManifest.xml"
+    proguardFiles="build/intermediates/default_proguard_files/global/proguard-android.txt-8.7.3"
+    resourceConfigurations="es,en"
+    partialResultsDir="build/intermediates/lint_vital_partial_results/debug/lintVitalAnalyzeDebug/out"
+    desugaredMethodsFiles="/home/zota/.gradle/caches/8.13/transforms/24b35cbc295eeb46edfd49137030ac74/transformed/D8BackportedDesugaredMethods.txt">
+  <buildFeatures
+      namespacing="REQUIRED"/>
+  <sourceProviders>
+    <sourceProvider
+        manifests="src/main/AndroidManifest.xml"
+        javaDirectories="src/main/java:src/debug/java:src/main/kotlin:src/debug/kotlin"
+        resDirectories="src/main/res:src/debug/res"
+        assetsDirectories="src/main/assets:src/debug/assets"/>
+  </sourceProviders>
+  <testSourceProviders>
+  </testSourceProviders>
+  <testFixturesSourceProviders>
+  </testFixturesSourceProviders>
+  <artifact
+      classOutputs="build/intermediates/javac/debug/compileDebugJavaWithJavac/classes:build/tmp/kotlin-classes/debug:build/kotlinToolingMetadata:build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar"
+      type="MAIN"
+      applicationId="com.cyberagent.app"
+      generatedSourceFolders="build/generated/ap_generated_sources/debug/out:build/generated/source/buildConfig/debug"
+      generatedResourceFolders="build/generated/res/resValues/debug"
+      desugaredMethodsFiles="/home/zota/.gradle/caches/8.13/transforms/24b35cbc295eeb46edfd49137030ac74/transformed/D8BackportedDesugaredMethods.txt">
+  </artifact>
+</variant>

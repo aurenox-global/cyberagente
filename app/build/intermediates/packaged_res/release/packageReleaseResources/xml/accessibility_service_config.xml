@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Configuración MÍNIMA del servicio de accesibilidad.
+  Respecto a la v2.0 se elimina:
+    · canRetrieveWindowContent  (ya no lee el contenido de otras apps)
+    · FLAG_REQUEST_FILTER_KEY_EVENTS (ya no captura eventos de tecla)
+    · TYPE_VIEW_TEXT_CHANGED    (ya no lee texto mientras se escribe)
+  Solo se recibe el cambio de estado de ventana para el guardia de instalaciones.
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowStateChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagDefault"
+    android:canRetrieveWindowContent="false"
+    android:description="@string/accessibility_description"
+    android:notificationTimeout="300" />

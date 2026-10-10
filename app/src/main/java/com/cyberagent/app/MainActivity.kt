@@ -4,7 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.Gravity
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.cyberagent.app.core.AutoDefense
 import com.cyberagent.app.core.Bg
 import com.cyberagent.app.core.CrashLog
@@ -22,17 +24,21 @@ import com.cyberagent.app.service.SecurityMonitorService
 import com.cyberagent.app.ui.Ui
 
 /**
- * Panel principal.
+ * Panel principal (v3 — «soft dark + menta»).
  *
- * Rediseñado para que la información se entienda de un vistazo:
- *  1) estado general (héroe), 2) accesos pendientes, 3) módulos en mosaicos,
- *  4) acciones rápidas, 5) defensa automática y 6) últimos eventos.
- * Todo lo que tarda (historial) se carga en segundo plano: la pantalla ya no
- * se bloquea al abrirla ni al volver de otra sección.
+ * Rediseñado para que la información se entienda de un vistazo, siguiendo el
+ * lenguaje visual de la referencia: cabecera con avatar/accesos, métrica
+ * destacada, rejilla de estado, módulos en tarjetas redondeadas, acciones
+ * rápidas, defensa automática, últimos eventos y una barra de navegación
+ * flotante. Todo lo que tarda (historial) se carga en segundo plano.
  */
 class MainActivity : SafeActivity() {
 
     private lateinit var root: LinearLayout
+    private lateinit var header: LinearLayout
+
+    /** Pestaña activa del panel (0=Inicio · 1=Módulos · 2=Acciones · 3=Eventos). */
+    private var tab = 0
 
     override fun build(savedInstanceState: Bundle?) {
         Prefs.init(this)
@@ -59,20 +65,37 @@ class MainActivity : SafeActivity() {
     }
 
     private fun render() {
-        root = Ui.screen(
+        // Cabecera y pestañas FIJAS; solo scrollea el contenido entre las
+        // pestañas y el dock.
+        val screen = Ui.tabbedScreen(
             this,
-            "PANEL DE SEGURIDAD",
-            "Estado real del dispositivo · ningún dato es simulado."
+            "CyberAgent",
+            "Consola de ciberdefensa · 100% local · sin telemetría",
+            TAB_TITLES,
+            tab,
+            onSelect = { i -> if (i != tab) { tab = i; renderSafe() } },
+            nav = navItems()
         )
+        header = screen.headerCol
+        root = screen.contentCol
 
         crashCard()
-        permissionsCard()
-        heroCard()
-        modulesGrid()
-        actionsCard()
-        autoDefenseCard()
-        alertsCard()
-        footer()
+        quickHeader(header)
+
+        when (tab) {
+            0 -> {
+                heroCard()
+                statsGrid()
+                permissionsCard()
+                footer()
+            }
+            1 -> modulesGrid()
+            2 -> {
+                actionsCard()
+                autoDefenseCard()
+            }
+            else -> alertsCard()
+        }
 
         // Vigilante: avisa si la protección dejó de funcionar de verdad
         // (otra VPN ocupando el túnel, roles revocados, batería optimizada).
@@ -81,17 +104,136 @@ class MainActivity : SafeActivity() {
         maybeOpenWizard()
     }
 
+    // ── Barra de navegación flotante ─────────────────────────────────
+
+    private fun navItems(): List<Ui.NavItem> = listOf(
+        Ui.NavItem("home", "Inicio", active = tab == 0) {
+            if (tab != 0) { tab = 0; renderSafe() }
+        },
+        Ui.NavItem("scan", "Escanear") { runScan() },
+        Ui.NavItem("bot", "Asistente") {
+            startActivity(Intent(this, AssistantActivity::class.java))
+        },
+        Ui.NavItem("settings", "Ajustes") {
+            startActivity(Intent(this, SecuritySettingsActivity::class.java))
+        }
+    )
+
+    // ── Cabecera con estado y avisos ─────────────────────────────────
+
+    private fun quickHeader(target: LinearLayout) {
+        val since = System.currentTimeMillis() - 86_400_000L
+        val high = Db.countHighAlerts(since)
+        val ok = high == 0
+        val row = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+        }
+        row.addView(Ui.iconBadge(this, if (ok) "check" else "warning", if (ok) Ui.GRN else Ui.RED, 44))
+
+        val col = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(Ui.dp(this@MainActivity, 12), 0, 0, 0)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        col.addView(Ui.label(
+            this,
+            if (ok) "Sistema protegido" else "$high alerta(s) de alta severidad",
+            if (ok) Ui.T1 else Ui.RED, 15f
+        ))
+        col.addView(Ui.label(
+            this,
+            "Monitor " + if (Prefs.panicMode) "en modo pánico" else "activo",
+            Ui.T3, 11.5f
+        ))
+        row.addView(col)
+
+        // Botón circular de avisos (campana), con punto si hay alertas altas.
+        val bell = android.widget.FrameLayout(this).apply {
+            background = Ui.rounded(this@MainActivity, Ui.SURF2, Ui.LINE, 22)
+            layoutParams = LinearLayout.LayoutParams(
+                Ui.dp(this@MainActivity, 44), Ui.dp(this@MainActivity, 44)
+            )
+            isClickable = true
+            setOnClickListener { startActivity(Intent(this@MainActivity, AlertsActivity::class.java)) }
+        }
+        val bellIv = Ui.csIcon(this, "bell", if (ok) Ui.T2 else Ui.RED, 21, 1.9f)
+        bell.addView(bellIv, android.widget.FrameLayout.LayoutParams(
+            Ui.dp(this, 21), Ui.dp(this, 21)
+        ).apply { gravity = Gravity.CENTER })
+        row.addView(bell)
+        target.addView(row)
+    }
+
     // ── Diagnóstico ──────────────────────────────────────────────────
 
     private fun crashCard() {
         val crash = CrashLog.read(this)
         if (crash.isEmpty()) return
-        val c = Ui.section(this, "FALLO INTERNO REGISTRADO", Ui.RED)
+        val c = Ui.section(this, "Fallo interno registrado", Ui.RED)
         c.addView(Ui.label(this, crash.take(1500), Ui.T2, 10.5f))
         c.addView(Ui.row(
             this,
-            Ui.button(this, "BORRAR DIAGNÓSTICO") { CrashLog.clear(this); renderSafe() }
+            Ui.button(this, "Borrar diagnóstico") { CrashLog.clear(this); renderSafe() }
         ))
+        root.addView(c)
+    }
+
+    // ── Estado general (métrica destacada) ───────────────────────────
+
+    private fun heroCard() {
+        val since = System.currentTimeMillis() - 86_400_000L
+        val alerts24 = Db.countAlerts(since)
+        val high = Db.countHighAlerts(since)
+        val safe = high == 0
+        val accent = if (safe) Ui.GRN else Ui.RED
+
+        val hero = Ui.metricCard(
+            this,
+            if (safe) "shield" else "warning",
+            alerts24.toString(),
+            if (alerts24 == 1) "evento · 24 h" else "eventos · 24 h",
+            if (safe) "Sin incidentes graves en las últimas 24 h"
+            else "$high alerta(s) de alta severidad · revisa el registro",
+            accent
+        )
+        hero.addView(Ui.row(
+            this,
+            Ui.chip(this, "${Prefs.blockedPackages().size} apps sin red", Ui.BLU),
+            Ui.chip(this, "${Prefs.quarantine().size} en cuarentena", Ui.AMB)
+        ))
+        root.addView(hero)
+    }
+
+    // ── Rejilla de estado (tarjetas con número grande) ───────────────
+
+    private fun statsGrid() {
+        val c = Ui.section(this, "Estado rápido", Ui.CY, "Pulsa para ver el detalle.")
+        val grid = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+
+        val r1 = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+        r1.addView(Ui.statTile(
+            this, Prefs.lastAppsAnalyzed.toString(), "apps", "analizadas",
+            Ui.CY
+        ) { startActivity(Intent(this, AppListActivity::class.java)) })
+        r1.addView(Ui.statTile(
+            this, Prefs.quarantine().size.toString(), "apps", "en cuarentena",
+            Ui.AMB
+        ) { startActivity(Intent(this, QuarantineCenterActivity::class.java)) })
+        grid.addView(r1)
+
+        val r2 = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+        r2.addView(Ui.statTile(
+            this, Prefs.blockedPackages().size.toString(), "apps", "sin acceso a red",
+            Ui.BLU
+        ) { startActivity(Intent(this, AppListActivity::class.java)) })
+        r2.addView(Ui.statTile(
+            this, Prefs.scanCount.toString(), "escaneos", "en total",
+            Ui.VIO
+        ) { startActivity(Intent(this, MetricsSummaryActivity::class.java)) })
+        grid.addView(r2)
+
+        c.addView(grid)
         root.addView(c)
     }
 
@@ -111,7 +253,7 @@ class MainActivity : SafeActivity() {
         val accent = if (done == total) Ui.GRN else Ui.AMB
         val c = Ui.section(
             this,
-            if (done == total) "ACCESOS · TODO CONCEDIDO" else "ACCESOS · $done/$total CONCEDIDOS",
+            if (done == total) "Accesos · todo concedido" else "Accesos · $done/$total",
             accent
         )
         c.addView(Ui.bar(this, done, total, accent))
@@ -123,15 +265,16 @@ class MainActivity : SafeActivity() {
                 "Toca el asistente y concede TODO en un solo recorrido, sin buscar ajustes a mano.",
             Ui.T2, 11.5f
         ))
-        c.addView(Ui.actionRow(
+        c.addView(Ui.actionRowIcon(
             this,
-            "🔐  Asistente de permisos",
+            "lock",
+            "Asistente de permisos",
             "Los recorre uno a uno y vuelve solo al siguiente paso",
             accent
         ) { startActivity(Intent(this, PermissionsActivity::class.java)) })
         if (!Perms.usageAccess(this)) {
-            c.addView(Ui.actionRow(
-                this, "📊  Acceso al uso", "Sin él no hay consumo por aplicación", Ui.AMB
+            c.addView(Ui.actionRowIcon(
+                this, "chart", "Acceso al uso", "Sin él no hay consumo por aplicación", Ui.AMB
             ) {
                 startActivity(
                     Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS, Uri.parse("package:$packageName"))
@@ -141,80 +284,50 @@ class MainActivity : SafeActivity() {
         root.addView(c)
     }
 
-    // ── Estado general ───────────────────────────────────────────────
-
-    private fun heroCard() {
-        val since = System.currentTimeMillis() - 86_400_000L
-        val alerts24 = Db.countAlerts(since)
-        val high = Db.countHighAlerts(since)
-        val safe = high == 0
-        val accent = if (safe) Ui.GRN else Ui.RED
-
-        val hero = Ui.hero(this, accent)
-        hero.addView(Ui.label(
-            this,
-            if (safe) "● SISTEMA SEGURO" else "● $high ALERTA(S) DE ALTA SEVERIDAD",
-            accent, 17f
-        ))
-        hero.addView(Ui.label(
-            this,
-            if (Prefs.panicMode) "Modo pánico ACTIVO · monitor de fondo en marcha"
-            else "Monitor de fondo " + if (Prefs.panicMode) "" else "activo",
-            Ui.T2, 12f
-        ))
-        hero.addView(Ui.row(
-            this,
-            Ui.chip(this, "$alerts24 eventos / 24 h", Ui.CY),
-            Ui.chip(this, "${Prefs.blockedPackages().size} apps sin red", Ui.BLU),
-            Ui.chip(this, "${Prefs.quarantine().size} en cuarentena", Ui.AMB)
-        ))
-        root.addView(hero)
-    }
-
     // ── Módulos ──────────────────────────────────────────────────────
 
     private fun modulesGrid() {
-        val c = Ui.section(this, "MÓDULOS", Ui.CY, "Pulsa un mosaico para entrar.")
+        val c = Ui.section(this, "Módulos", Ui.CY, "Pulsa una tarjeta para entrar.")
         c.addView(Ui.tileGrid(
             this,
             listOf(
-                Ui.TileItem("📱", "Aplicaciones", "Permisos y riesgo por app", Ui.CY) {
+                Ui.TileItem("apps", "Aplicaciones", "Permisos y riesgo por app", Ui.CY) {
                     startActivity(Intent(this, AppListActivity::class.java))
                 },
-                Ui.TileItem("📞", "Llamadas y SMS", "Lista negra y blindaje", Ui.CY) {
+                Ui.TileItem("phone", "Llamadas y SMS", "Lista negra y blindaje", Ui.CY) {
                     startActivity(Intent(this, CallSmsShieldActivity::class.java))
                 },
-                Ui.TileItem("🌐", "Uso de Internet", "Consumo por aplicación", Ui.CY) {
+                Ui.TileItem("globe", "Uso de Internet", "Consumo por aplicación", Ui.CY) {
                     startActivity(Intent(this, InternetUsageActivity::class.java))
                 },
-                Ui.TileItem("🦠", "Cuarentena", "Apps aisladas y desinstalación", Ui.CY) {
+                Ui.TileItem("bug", "Cuarentena", "Apps aisladas y desinstalación", Ui.CY) {
                     startActivity(Intent(this, QuarantineCenterActivity::class.java))
                 },
-                Ui.TileItem("🔬", "Forense", "SHA-256 e IoC", Ui.CY) {
+                Ui.TileItem("flask", "Forense", "SHA-256 e IoC", Ui.CY) {
                     startActivity(Intent(this, ForensicVerifierActivity::class.java))
                 },
-                Ui.TileItem("📶", "Wi-Fi", "Cifrado y señales raras", Ui.CY) {
+                Ui.TileItem("wifi", "Wi-Fi", "Cifrado y señales raras", Ui.CY) {
                     startActivity(Intent(this, WifiSecurityAnalysisActivity::class.java))
                 },
-                Ui.TileItem("📊", "Métricas", "Resumen y widgets", Ui.CY) {
+                Ui.TileItem("chart", "Métricas", "Resumen y widgets", Ui.CY) {
                     startActivity(Intent(this, MetricsSummaryActivity::class.java))
                 },
-                Ui.TileItem("🤖", "Asistente IA", "Análisis defensivo local", Ui.CY) {
+                Ui.TileItem("bot", "Asistente IA", "Análisis defensivo local", Ui.CY) {
                     startActivity(Intent(this, AssistantActivity::class.java))
                 },
-                Ui.TileItem("⚠️", "Eventos", "Historial completo", Ui.CY) {
+                Ui.TileItem("warning", "Eventos", "Historial completo", Ui.CY) {
                     startActivity(Intent(this, AlertsActivity::class.java))
                 },
-                Ui.TileItem("🧪", "Herramientas", "Autodiagnóstico y enlaces", Ui.CY) {
+                Ui.TileItem("tools", "Herramientas", "Autodiagnóstico y enlaces", Ui.CY) {
                     startActivity(Intent(this, SelfTestActivity::class.java))
                 },
-                Ui.TileItem("🧠", "Confianza", "Recomendaciones por app", Ui.CY) {
+                Ui.TileItem("star", "Confianza", "Recomendaciones por app", Ui.CY) {
                     startActivity(Intent(this, TrustAdvisorActivity::class.java))
                 },
-                Ui.TileItem("✈️", "Comprobar enlace", "Anti-phishing manual", Ui.CY) {
+                Ui.TileItem("share", "Comprobar enlace", "Anti-phishing manual", Ui.CY) {
                     startActivity(Intent(this, ShareInspectActivity::class.java))
                 },
-                Ui.TileItem("⚙️", "Ajustes", "Sensibilidad y datos", Ui.CY) {
+                Ui.TileItem("settings", "Ajustes", "Sensibilidad y datos", Ui.CY) {
                     startActivity(Intent(this, SecuritySettingsActivity::class.java))
                 }
             )
@@ -225,10 +338,11 @@ class MainActivity : SafeActivity() {
     // ── Acciones rápidas ─────────────────────────────────────────────
 
     private fun actionsCard() {
-        val c = Ui.section(this, "ACCIONES RÁPIDAS", Ui.BLU)
-        c.addView(Ui.actionRow(
+        val c = Ui.section(this, "Acciones rápidas", Ui.BLU)
+        c.addView(Ui.actionRowIcon(
             this,
-            if (Prefs.panicMode) "🔴  Desactivar modo pánico" else "🔴  Activar modo pánico",
+            "warning",
+            if (Prefs.panicMode) "Desactivar modo pánico" else "Activar modo pánico",
             if (Prefs.panicMode) "Vuelve al estado normal"
             else if (Prefs.trustedPackages().isEmpty())
                 "⚠ Cortará la red de TODAS las apps (no hay apps de confianza)"
@@ -238,9 +352,10 @@ class MainActivity : SafeActivity() {
             if (Prefs.panicMode) PanicModeManager.disable(this) else PanicModeManager.enable(this)
             renderSafe()
         })
-        c.addView(Ui.actionRow(
+        c.addView(Ui.actionRowIcon(
             this,
-            if (Prefs.firewallEnabled) "🚧  Parar cortafuegos VPN" else "🚧  Activar cortafuegos VPN",
+            "lock",
+            if (Prefs.firewallEnabled) "Parar cortafuegos VPN" else "Activar cortafuegos VPN",
             "Bloqueo de red por aplicación, en el propio móvil",
             Ui.CY
         ) {
@@ -255,33 +370,35 @@ class MainActivity : SafeActivity() {
                 }
             }
         })
-        c.addView(Ui.actionRow(
-            this, "🛰️  Monitor de seguridad",
+        c.addView(Ui.actionRowIcon(
+            this, "activity", "Monitor de seguridad",
             if (Prefs.panicMode) "En marcha" else "Servicio en primer plano con aviso permanente",
             Ui.CY
         ) {
             SecurityMonitorService.start(this)
             renderSafe()
         })
-        c.addView(Ui.actionRow(
-            this, "🧪  Escanear ahora", "Análisis inmediato + cuarentena automática", Ui.CY
-        ) {
-            Bg.run(this, "scanManual") {
-                val res = AutoDefense.runOnce(this, notify = true)
-                runOnUiThread {
-                    Notify.post(this, "Escaneo manual", res)
-                    renderSafe()
-                }
-            }
-        })
+        c.addView(Ui.actionRowIcon(
+            this, "scan", "Escanear ahora", "Análisis inmediato + cuarentena automática", Ui.CY
+        ) { runScan() })
         root.addView(c)
+    }
+
+    private fun runScan() {
+        Bg.run(this, "scanManual") {
+            val res = AutoDefense.runOnce(this, notify = true)
+            runOnUiThread {
+                Notify.post(this, "Escaneo manual", res)
+                renderSafe()
+            }
+        }
     }
 
     // ── Defensa automática ───────────────────────────────────────────
 
     private fun autoDefenseCard() {
         val autoOn = Prefs.autoDefenseEnabled
-        val c = Ui.section(this, "DEFENSA AUTOMÁTICA · 0 CLICS", if (autoOn) Ui.GRN else Ui.AMB)
+        val c = Ui.section(this, "Defensa automática · 0 clics", if (autoOn) Ui.GRN else Ui.AMB)
         c.addView(Ui.label(
             this,
             if (autoOn)
@@ -318,12 +435,12 @@ class MainActivity : SafeActivity() {
     // ── Eventos recientes (segundo plano) ────────────────────────────
 
     private fun alertsCard() {
-        val c = Ui.section(this, "ÚLTIMOS EVENTOS", Ui.AMB)
+        val c = Ui.section(this, "Últimos eventos", Ui.AMB)
         val body = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         body.addView(Ui.label(this, "Cargando…", Ui.T3))
         c.addView(body)
-        c.addView(Ui.actionRow(
-            this, "⚠️  Ver todo el registro", "Historial completo con filtros", Ui.AMB
+        c.addView(Ui.actionRowIcon(
+            this, "warning", "Ver todo el registro", "Historial completo con filtros", Ui.AMB
         ) { startActivity(Intent(this, AlertsActivity::class.java)) })
         root.addView(c)
 
@@ -375,8 +492,6 @@ class MainActivity : SafeActivity() {
         }
     }
 
-    private fun isAccessibilityOn(): Boolean = Perms.accessibilityEnabled(this)
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_VPN && resultCode == RESULT_OK) {
@@ -387,5 +502,6 @@ class MainActivity : SafeActivity() {
 
     companion object {
         private const val REQ_VPN = 4202
+        private val TAB_TITLES = listOf("Inicio", "Módulos", "Acciones", "Eventos")
     }
 }

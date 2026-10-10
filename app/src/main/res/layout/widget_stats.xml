@@ -3,13 +3,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="#050A10">
+    android:background="#0A100E">
 
     <TextView
         android:id="@+id/w_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#00FFD6"
+        android:textColor="#3FE0A6"
         android:textSize="11sp"
         android:letterSpacing="0.15"
         android:text="CYBERAGENT" />
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:textColor="#00FF88"
+        android:textColor="#4ADE80"
         android:textSize="14sp"
         android:textStyle="bold"
         android:text="SEGURO" />
@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textColor="#8FB3BF"
+        android:textColor="#9AA8A2"
         android:textSize="11sp"
         android:text="0 alertas" />
 </LinearLayout>

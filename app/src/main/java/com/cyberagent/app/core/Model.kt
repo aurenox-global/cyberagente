@@ -26,7 +26,9 @@ data class AppRisk(
     val level: RiskLevel,
     val reasons: List<String>,
     /** Instalada desde una tienda verificada (Play, F-Droid…). */
-    val fromStore: Boolean = false
+    val fromStore: Boolean = false,
+    /** SHA-256 del certificado de firma (identifica al desarrollador). */
+    val signerSha256: String = ""
 )
 
 data class WifiReport(

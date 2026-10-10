@@ -29,7 +29,7 @@ class AppDetailActivity : SafeActivity() {
 
         val info = try {
             @Suppress("DEPRECATION")
-            packageManager.getPackageInfo(p, PackageManager.GET_PERMISSIONS)
+            packageManager.getPackageInfo(p, PackageManager.GET_PERMISSIONS or PackageManager.GET_SIGNATURES)
         } catch (t: Throwable) {
             null
         }
@@ -38,24 +38,48 @@ class AppDetailActivity : SafeActivity() {
             return
         }
 
-        val risk = AppAnalyzer.analyze(this, info)
-        val card = Ui.card(this)
-        card.addView(
-            Ui.label(
-                this,
-                "${risk.label} — ${risk.level} (${risk.score}/100)",
-                if (risk.score >= 35) Ui.RED else Ui.GRN,
-                14f
-            )
-        )
-        card.addView(
+        // Análisis rápido (permisos + firma + postura). El hash del APK se añade
+        // después en segundo plano para no bloquear la pantalla.
+        var risk = AppAnalyzer.analyze(this, info)
+
+        val headCard = Ui.card(this)
+        val scoreLabel = Ui.label(this, "", Ui.T1, 14f)
+        headCard.addView(scoreLabel)
+        headCard.addView(
             Ui.label(
                 this,
                 "targetSdk ${risk.targetSdk}" + (if (risk.isSystem) " · app de sistema" else ""),
                 Ui.T2
             )
         )
-        root.addView(card)
+        headCard.addView(Ui.label(this, "Firma SHA-256: " + (risk.signerSha256.take(32).ifEmpty { "—" }) + "…", Ui.T3, 10.5f))
+        root.addView(headCard)
+
+        fun paint() {
+            scoreLabel.text = "${risk.label} — ${risk.level} (${risk.score}/100)"
+            scoreLabel.setTextColor(if (risk.score >= 45) Ui.RED else Ui.GRN)
+        }
+        paint()
+
+        // Integración del hash del APK (IoC) en el score, en segundo plano.
+        val src = try {
+            packageManager.getApplicationInfo(p, 0).sourceDir
+        } catch (t: Throwable) {
+            ""
+        }
+        if (src.isNotEmpty()) {
+            Bg.run(this, "AppDetail.hash") {
+                val hash = ApkReputation.fileSha256(src)
+                if (hash.isNotEmpty()) {
+                    val withIoc = AppAnalyzer.analyze(this, info, emptyMap(), hash)
+                    runOnUiThread {
+                        if (isFinishing || isDestroyed) return@runOnUiThread
+                        risk = withIoc
+                        paint()
+                    }
+                }
+            }
+        }
 
         val reasons = Ui.card(this)
         reasons.addView(Ui.heading(this, "MOTIVOS DEL SCORE"))
@@ -93,23 +117,21 @@ class AppDetailActivity : SafeActivity() {
             outCol.removeAllViews()
             outCol.addView(Ui.label(this, "Calculando SHA-256 del APK…", Ui.T3, 11.5f))
             Bg.run(this, "ApkReputation") {
-                val info = ApkReputation.analyze(this, p, onlineConsent)
+                val repInfo = ApkReputation.analyze(this, p, onlineConsent)
                 runOnUiThread {
                     if (isFinishing || isDestroyed) return@runOnUiThread
                     outCol.removeAllViews()
-                    if (info == null) {
+                    if (repInfo == null) {
                         outCol.addView(Ui.label(this, "No se pudo leer el paquete.", Ui.RED))
                         return@runOnUiThread
                     }
-                    val risky = info.verdict.contains("MALICIOSO") || info.verdict.contains("SOSPECHOSO")
-                    outCol.addView(Ui.chip(
-                        this, info.verdict, if (risky) Ui.RED else Ui.GRN
-                    ))
+                    val risky = repInfo.verdict.contains("MALICIOSO") || repInfo.verdict.contains("SOSPECHOSO")
+                    outCol.addView(Ui.chip(this, repInfo.verdict, if (risky) Ui.RED else Ui.GRN))
                     outCol.addView(Ui.label(this, "APK SHA-256:", Ui.T2, 11f))
-                    outCol.addView(Ui.label(this, info.apkSha256, Ui.T1, 10f))
-                    outCol.addView(Ui.label(this, "Firma: " + info.signerSubject.take(80), Ui.T2, 10.5f))
-                    outCol.addView(Ui.label(this, info.detail, Ui.T2, 11f))
-                    outCol.addView(Ui.label(this, "Fuente: " + info.source, Ui.T3, 10.5f))
+                    outCol.addView(Ui.label(this, repInfo.apkSha256, Ui.T1, 10f))
+                    outCol.addView(Ui.label(this, "Firma: " + repInfo.signerSubject.take(80), Ui.T2, 10.5f))
+                    outCol.addView(Ui.label(this, repInfo.detail, Ui.T2, 11f))
+                    outCol.addView(Ui.label(this, "Fuente: " + repInfo.source, Ui.T3, 10.5f))
                 }
             }
         })
@@ -153,6 +175,29 @@ class AppDetailActivity : SafeActivity() {
             else "En modo pánico, solo las apps de confianza conservan internet.",
             Ui.T3, 10.5f
         ))
+
+        // Whitelist por FIRMA: marcar al desarrollador (todas sus apps) de confianza.
+        val signer = risk.signerSha256
+        if (signer.isNotEmpty()) {
+            val trustedSig = Prefs.isTrustedSigner(signer)
+            actions.addView(Ui.button(
+                this,
+                if (trustedSig) "QUITAR FIRMA DE CONFIANZA" else "CONFIAR EN ESTA FIRMA",
+                false
+            ) {
+                if (trustedSig) Prefs.untrustSigner(signer) else Prefs.trustSigner(signer)
+                render()
+            })
+            actions.addView(Ui.label(
+                this,
+                if (trustedSig)
+                    "Firma de confianza: cualquier app firmada por este desarrollador baja su riesgo."
+                else
+                    "Marca de confianza la FIRMA (no solo esta app) para reducir falsos positivos " +
+                        "de futuras apps del mismo autor.",
+                Ui.T3, 10.5f
+            ))
+        }
         root.addView(actions)
     }
 }

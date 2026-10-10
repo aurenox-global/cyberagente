@@ -16,14 +16,18 @@ class BarChartView @JvmOverloads constructor(
 
     private var data: List<Pair<String, Long>> = emptyList()
 
+    /** Escala de densidad, para que el texto no salga diminuto en pantallas densas. */
+    private val dens: Float = ctx.resources.displayMetrics.scaledDensity
+
     private val barPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Ui.CY }
     private val emptyPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Ui.LINE }
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Ui.T3
-        textSize = 22f
+        textSize = 11f * dens
         textAlign = Paint.Align.CENTER
+        typeface = Ui.MONO
     }
-    private val gridPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0xFF0E2029.toInt() }
+    private val gridPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0x14FFFFFF }
 
     fun setData(series: List<Pair<String, Long>>) {
         data = series
@@ -59,10 +63,9 @@ class BarChartView @JvmOverloads constructor(
             val cx = slot * i + slot / 2f
             val bh = (value.toFloat() / max) * (usableH - 18f)
             val top = bottom - bh
-            canvas.drawRect(
-                cx - barW / 2f, top, cx + barW / 2f, bottom,
-                if (value > 0) barPaint else emptyPaint
-            )
+            val shape = android.graphics.RectF(cx - barW / 2f, top, cx + barW / 2f, bottom)
+            val r = barW * 0.30f
+            canvas.drawRoundRect(shape, r, r, if (value > 0) barPaint else emptyPaint)
             canvas.drawText(name, cx, h - 8f, textPaint)
         }
     }
@@ -76,8 +79,9 @@ class BarChartView @JvmOverloads constructor(
             val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Ui.CY }
             val label = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 color = Ui.T3
-                textSize = if (h < 90) 18f else 22f
+                textSize = (if (h < 90) 9f else 11f) * ctx.resources.displayMetrics.scaledDensity
                 textAlign = Paint.Align.CENTER
+                typeface = Ui.MONO
             }
             if (series.isEmpty()) return bmp
             val max = (series.maxOfOrNull { it.second } ?: 0L).coerceAtLeast(1L)
@@ -88,7 +92,9 @@ class BarChartView @JvmOverloads constructor(
                 val cx = slot * i + slot / 2f
                 val bh = (v.toFloat() / max) * (bottom - 12f)
                 paint.color = if (v > 0) Ui.CY else Ui.LINE
-                c.drawRect(cx - barW / 2f, bottom - bh, cx + barW / 2f, bottom, paint)
+                val shape = android.graphics.RectF(cx - barW / 2f, bottom - bh, cx + barW / 2f, bottom)
+                val rr = barW * 0.30f
+                c.drawRoundRect(shape, rr, rr, paint)
                 c.drawText(name, cx, h - 6f, label)
             }
             return bmp

@@ -15,25 +15,25 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --void:#03060A;
-  --bg:#050A10;
-  --panel:#070E16;
-  --panel2:#0A141F;
-  --line:#12303C;
-  --line-soft:rgba(0,255,214,.10);
-  --cy:#00FFD6;
-  --cy-dim:#0FB8A0;
-  --grn:#00FF88;
-  --amb:#FFC44D;
-  --red:#FF3B5C;
-  --blu:#3DA9FF;
-  --vio:#8B7DFF;
-  --t1:#E8FFF9;
-  --t2:#8FB3BF;
-  --t3:#4A6B77;
+  --void:#070B0A;
+  --bg:#0A100E;
+  --panel:#141B19;
+  --panel2:#101614;
+  --line:#243530;
+  --line-soft:rgba(63,224,166,.12);
+  --cy:#3FE0A6;
+  --cy-dim:#2FB98A;
+  --grn:#4ADE80;
+  --amb:#FFC24D;
+  --red:#FF5D6C;
+  --blu:#5AA9FF;
+  --vio:#9B8CFF;
+  --t1:#F2FBF7;
+  --t2:#9AA8A2;
+  --t3:#5E6C67;
   --mono:'JetBrains Mono','Share Tech Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-  --glow:0 0 22px rgba(0,255,214,.28);
-  --r:2px;
+  --glow:0 0 26px rgba(63,224,166,.30);
+  --r:14px;
 }
 
 html{scroll-behavior:smooth}
@@ -61,8 +61,8 @@ button{font-family:inherit}
 .grid-bg{
   position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
   background-image:
-    linear-gradient(rgba(0,255,214,.045) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,255,214,.045) 1px,transparent 1px);
+    linear-gradient(rgba(63,224,166,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(63,224,166,.045) 1px,transparent 1px);
   background-size:44px 44px;
   mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 10%,transparent 78%);
   -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 10%,transparent 78%);
@@ -72,7 +72,7 @@ button{font-family:inherit}
 .scanlines{position:fixed;inset:0;z-index:4;pointer-events:none;opacity:.30;
   background:repeating-linear-gradient(180deg,rgba(0,0,0,0) 0 2px,rgba(0,0,0,.55) 2px 4px)}
 .scanbeam{position:fixed;left:0;right:0;height:120px;z-index:5;pointer-events:none;
-  background:linear-gradient(180deg,transparent,rgba(0,255,214,.045),transparent);
+  background:linear-gradient(180deg,transparent,rgba(63,224,166,.045),transparent);
   animation:sweep 7.5s linear infinite}
 @keyframes sweep{0%{top:-140px}100%{top:100%}}
 @media (prefers-reduced-motion:reduce){.scanbeam{display:none}#bits{opacity:.12}}
@@ -90,7 +90,7 @@ section{position:relative;z-index:6;padding:96px 0;scroll-margin-top:74px}
 }
 #boot.done{opacity:0;visibility:hidden}
 .boot-box{width:min(680px,100%);border:1px solid var(--line);background:#03080E;padding:22px;
-  box-shadow:0 0 60px rgba(0,255,214,.09)}
+  box-shadow:0 0 60px rgba(63,224,166,.09)}
 #bootlog{font-size:12.5px;color:var(--grn);min-height:210px;white-space:pre-wrap;word-break:break-word}
 #bootlog .ok{color:var(--grn)}
 #bootlog .dim{color:var(--t3)}
@@ -107,7 +107,7 @@ header.stuck{background:rgba(3,7,12,.90);border-bottom-color:var(--line-soft)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:62px}
 .brand{display:flex;align-items:center;gap:11px;font-weight:700;color:var(--t1);letter-spacing:.5px}
 .shield{width:26px;height:29px;position:relative;flex-shrink:0}
-.shield path{stroke:var(--cy);fill:rgba(0,255,214,.07);stroke-width:1.6}
+.shield path{stroke:var(--cy);fill:rgba(63,224,166,.07);stroke-width:1.6}
 .brand b{font-size:15px}
 .brand span{color:var(--cy)}
 .navlinks{display:flex;gap:26px;font-size:12.5px;letter-spacing:.6px}
@@ -116,13 +116,13 @@ header.stuck{background:rgba(3,7,12,.90);border-bottom-color:var(--line-soft)}
 .navlinks a:hover{color:var(--cy)}
 .navlinks a:hover::before{width:100%}
 .nav-cta{border:1px solid var(--cy);color:var(--cy);padding:8px 15px;font-size:12px;letter-spacing:1px;
-  background:rgba(0,255,214,.05);transition:.25s}
+  background:rgba(63,224,166,.05);transition:.25s}
 .nav-cta:hover{background:var(--cy);color:#00120E;box-shadow:var(--glow)}
 #burger{display:none;background:none;border:1px solid var(--line);color:var(--cy);padding:7px 10px;cursor:pointer}
 
 /* ── tipografía / tags ─────────────────────────── */
 .tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:2px;
-  color:var(--cy);border:1px solid var(--line);background:rgba(0,255,214,.05);padding:5px 12px;text-transform:uppercase}
+  color:var(--cy);border:1px solid var(--line);background:rgba(63,224,166,.05);padding:5px 12px;text-transform:uppercase}
 .tag i{width:6px;height:6px;background:var(--grn);border-radius:50%;box-shadow:0 0 8px var(--grn);animation:blip 1.6s infinite}
 @keyframes blip{0%,100%{opacity:1}50%{opacity:.25}}
 h1,h2,h3{color:var(--t1);line-height:1.16;font-weight:800;letter-spacing:-.5px}
@@ -136,7 +136,7 @@ h2.sec{font-size:clamp(24px,3.6vw,40px)}
 #hero{padding-top:132px;padding-bottom:80px}
 .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:52px;align-items:center}
 h1.hero-title{font-size:clamp(30px,5vw,54px);margin:18px 0 0}
-.hero-title .mod{color:var(--cy);text-shadow:0 0 26px rgba(0,255,214,.35)}
+.hero-title .mod{color:var(--cy);text-shadow:0 0 26px rgba(63,224,166,.35)}
 .glitch{position:relative;display:inline-block;color:var(--t1)}
 .glitch::before,.glitch::after{content:attr(data-t);position:absolute;left:0;top:0;width:100%;overflow:hidden}
 .glitch::before{color:var(--red);clip-path:inset(0 0 62% 0);animation:gl1 3.6s infinite steps(2)}
@@ -152,9 +152,9 @@ h1.hero-title{font-size:clamp(30px,5vw,54px);margin:18px 0 0}
 .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;font-size:12.5px;letter-spacing:1.4px;
   font-weight:700;border:1px solid var(--cy);cursor:pointer;transition:.25s;text-transform:uppercase}
 .btn-p{background:var(--cy);color:#00140F}
-.btn-p:hover{box-shadow:0 0 30px rgba(0,255,214,.45);transform:translateY(-2px)}
+.btn-p:hover{box-shadow:0 0 30px rgba(63,224,166,.45);transform:translateY(-2px)}
 .btn-s{background:transparent;color:var(--cy)}
-.btn-s:hover{background:rgba(0,255,214,.09);transform:translateY(-2px)}
+.btn-s:hover{background:rgba(63,224,166,.09);transform:translateY(-2px)}
 .trustbar{margin-top:44px;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);
   padding:16px 0;display:flex;gap:26px;flex-wrap:wrap;font-size:11.5px;color:var(--t3);letter-spacing:.5px}
 .trustbar div{display:flex;align-items:center;gap:7px}
@@ -162,9 +162,9 @@ h1.hero-title{font-size:clamp(30px,5vw,54px);margin:18px 0 0}
 
 /* ── HUD panel ─────────────────────────────────── */
 .hud{border:1px solid var(--line);background:linear-gradient(180deg,var(--panel2),var(--panel));
-  box-shadow:0 0 60px rgba(0,255,214,.07);position:relative}
+  box-shadow:0 0 60px rgba(63,224,166,.07);position:relative}
 .hud-top{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;
-  border-bottom:1px solid var(--line);background:rgba(0,255,214,.035);font-size:11.5px;letter-spacing:1px}
+  border-bottom:1px solid var(--line);background:rgba(63,224,166,.035);font-size:11.5px;letter-spacing:1px}
 .hud-top .dots{display:flex;gap:6px}
 .hud-top .dots i{width:9px;height:9px;border-radius:50%;background:#1C3A45}
 .hud-top .dots i:first-child{background:var(--red)}
@@ -175,16 +175,16 @@ h1.hero-title{font-size:clamp(30px,5vw,54px);margin:18px 0 0}
   background:rgba(0,255,136,.06);padding:9px 12px;font-size:12px;color:var(--grn)}
 .statusline .pulse{width:8px;height:8px;border-radius:50%;background:var(--grn);box-shadow:0 0 10px var(--grn);animation:blip 1.4s infinite}
 .radar{position:relative;height:210px;margin:16px 0;border:1px solid var(--line);background:
-  radial-gradient(circle at 50% 50%,rgba(0,255,214,.06),transparent 62%),#040A10;overflow:hidden}
-.radar .ring{position:absolute;inset:0;margin:auto;border:1px solid rgba(0,255,214,.16);border-radius:50%}
+  radial-gradient(circle at 50% 50%,rgba(63,224,166,.06),transparent 62%),#040A10;overflow:hidden}
+.radar .ring{position:absolute;inset:0;margin:auto;border:1px solid rgba(63,224,166,.16);border-radius:50%}
 .radar .ring.r1{width:74px;height:74px}
 .radar .ring.r2{width:134px;height:134px}
 .radar .ring.r3{width:194px;height:194px}
-.radar .cross-h,.radar .cross-v{position:absolute;background:rgba(0,255,214,.13)}
+.radar .cross-h,.radar .cross-v{position:absolute;background:rgba(63,224,166,.13)}
 .radar .cross-h{left:0;right:0;top:50%;height:1px}
 .radar .cross-v{top:0;bottom:0;left:50%;width:1px}
 .radar .sweep{position:absolute;inset:0;border-radius:50%;
-  background:conic-gradient(from 0deg,rgba(0,255,214,.30),transparent 30%);animation:spin 3.4s linear infinite}
+  background:conic-gradient(from 0deg,rgba(63,224,166,.30),transparent 30%);animation:spin 3.4s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .radar .blip{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--grn);box-shadow:0 0 10px var(--grn)}
 .radar .blip.b2{background:var(--amb);box-shadow:0 0 10px var(--amb)}
@@ -205,10 +205,10 @@ h1.hero-title{font-size:clamp(30px,5vw,54px);margin:18px 0 0}
   padding:24px 22px;position:relative;transition:.28s;overflow:hidden}
 .card::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:1px;
   background:linear-gradient(90deg,transparent,var(--cy),transparent);transition:.5s}
-.card:hover{border-color:rgba(0,255,214,.4);transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+.card:hover{border-color:rgba(63,224,166,.4);transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.5)}
 .card:hover::after{left:100%}
 .card .ico{width:42px;height:42px;border:1px solid var(--line);display:grid;place-items:center;
-  font-size:19px;margin-bottom:16px;background:rgba(0,255,214,.05)}
+  font-size:19px;margin-bottom:16px;background:rgba(63,224,166,.05)}
 .card .idx{position:absolute;top:18px;right:18px;font-size:10.5px;color:var(--t3);letter-spacing:1px}
 .card h3{font-size:15.5px;margin-bottom:9px}
 .card p{font-size:13px;color:var(--t2)}
@@ -217,9 +217,9 @@ h1.hero-title{font-size:clamp(30px,5vw,54px);margin:18px 0 0}
 
 /* ── terminal IA ───────────────────────────────── */
 .ai-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:44px;align-items:center}
-.term{border:1px solid var(--line);background:#03080E;box-shadow:0 0 60px rgba(0,255,214,.08)}
+.term{border:1px solid var(--line);background:#03080E;box-shadow:0 0 60px rgba(63,224,166,.08)}
 .term-top{display:flex;align-items:center;gap:8px;padding:10px 13px;border-bottom:1px solid var(--line);
-  background:rgba(0,255,214,.04);font-size:11.5px;color:var(--t3);letter-spacing:1px}
+  background:rgba(63,224,166,.04);font-size:11.5px;color:var(--t3);letter-spacing:1px}
 .term-top .dots{display:flex;gap:5px}
 .term-top .dots i{width:8px;height:8px;border-radius:50%;background:#1C3A45}
 .term-top .dots i:first-child{background:var(--red)}
@@ -240,7 +240,7 @@ h1.hero-title{font-size:clamp(30px,5vw,54px);margin:18px 0 0}
 /* ── steps ─────────────────────────────────────── */
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:16px;margin-top:14px}
 .step{border:1px solid var(--line);background:#050B12;padding:24px 20px;position:relative;transition:.25s}
-.step:hover{border-color:rgba(0,255,214,.4);background:#071018}
+.step:hover{border-color:rgba(63,224,166,.4);background:#071018}
 .step .n{font-size:11px;color:var(--cy);letter-spacing:2px;margin-bottom:12px}
 .step .n b{font-size:26px;color:var(--t1);display:block;line-height:1;margin-top:6px}
 .step h3{font-size:14px;margin-bottom:8px}
@@ -251,7 +251,7 @@ h1.hero-title{font-size:clamp(30px,5vw,54px);margin:18px 0 0}
 /* ── security ──────────────────────────────────── */
 .segrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:16px}
 .sec-item{border:1px solid var(--line);background:#050B12;padding:22px;transition:.25s}
-.sec-item:hover{border-color:rgba(0,255,214,.35)}
+.sec-item:hover{border-color:rgba(63,224,166,.35)}
 .sec-item .top{display:flex;align-items:center;gap:12px;margin-bottom:11px}
 .sec-item .top span{font-size:18px}
 .sec-item h3{font-size:14px}
@@ -259,7 +259,7 @@ h1.hero-title{font-size:clamp(30px,5vw,54px);margin:18px 0 0}
 
 /* ── download ──────────────────────────────────── */
 .dl{border:1px solid var(--line);background:
-  radial-gradient(ellipse at 50% 0%,rgba(0,255,214,.08),transparent 60%),#040A10;
+  radial-gradient(ellipse at 50% 0%,rgba(63,224,166,.08),transparent 60%),#040A10;
   padding:60px 40px;text-align:center;position:relative;overflow:hidden}
 .dl h2{font-size:clamp(23px,3.4vw,36px)}
 .dl p{margin-top:14px;max-width:600px;margin-inline:auto;font-size:13.5px}
@@ -590,11 +590,11 @@ footer{border-top:1px solid var(--line-soft);padding:52px 0 34px;position:relati
 <section id="download">
   <div class="wrap">
     <div class="dl rv">
-      <div class="tag" style="margin-bottom:18px"><i></i> release v2.5.1 · estable</div>
+      <div class="tag" style="margin-bottom:18px"><i></i> release v2.6.0 · estable</div>
       <h2>Instala CyberAgent</h2>
       <p>Gratuito, open-source y sin restricciones. Firmado, reproducible y sin dependencias de terceros.</p>
       <div class="btns">
-        <a class="btn btn-p" id="btn-download-apk" href="https://github.com/aurenox-global/cyberagente/releases/download/v2.5.1/CyberAgent_2.5.1.apk">▼ descargar APK v2.5.1</a>
+        <a class="btn btn-p" id="btn-download-apk" href="https://github.com/aurenox-global/cyberagente/releases/download/v2.6.0/CyberAgent_2.6.0.apk">▼ descargar APK v2.6.0</a>
         <a class="btn btn-s" href="https://github.com/aurenox-global/cyberagente/releases">ver releases →</a>
       </div>
       <div class="hashbox">
@@ -604,7 +604,7 @@ footer{border-top:1px solid var(--line-soft);padding:52px 0 34px;position:relati
       </div>
       <div class="dlmeta">
         <div>android <b>8.0+ (API 26)</b></div>
-        <div>versión <b>2.5.1</b> · <a href="https://github.com/aurenox-global/cyberagente/releases/download/v2.5.1/CyberAgent_2.5.1.apk" style="color:var(--cy)">descarga directa</a></div>
+        <div>versión <b>2.6.0</b> · <a href="https://github.com/aurenox-global/cyberagente/releases/download/v2.6.0/CyberAgent_2.6.0.apk" style="color:var(--cy)">descarga directa</a></div>
         <div>tamaño <b>~4,5 MB</b></div>
         <div>licencia <b>open source</b></div>
       </div>
@@ -647,7 +647,7 @@ footer{border-top:1px solid var(--line-soft);padding:52px 0 34px;position:relati
     </div>
     <div class="fbottom">
       <div><span class="pulse"></span>© 2026 CyberAgent · creado por Andrés Mag (Cuba)</div>
-      <div>construido para el Blue Team · build v2.5.1 · <span id="ftr-time">--:--:--</span></div>
+      <div>construido para el Blue Team · build v2.6.0 · <span id="ftr-time">--:--:--</span></div>
     </div>
   </div>
 </footer>
@@ -658,7 +658,7 @@ footer{border-top:1px solid var(--line-soft);padding:52px 0 34px;position:relati
    ══════════════════════════════════════════════════════ */
 (function(){
   var lines = [
-    ['[ ok ]','cyberagent core v2.5.1 — arrancando'],'',
+    ['[ ok ]','cyberagent core v2.6.0 — arrancando'],'',
     ['[ ok ]','sistema de archivos cifrado montado'],
     ['[ ok ]','keystore local inicializado'],
     ['[ ok ]','servicio VPN en loopback: activo'],
@@ -719,7 +719,7 @@ footer{border-top:1px solid var(--line-soft);padding:52px 0 34px;position:relati
       var ch = Math.random() > .5 ? '1' : '0';
       var y = ypos[i]*fs;
       var r = Math.random();
-      x.fillStyle = r > .975 ? '#E8FFF9' : (r > .90 ? 'rgba(0,255,214,.85)' : 'rgba(0,150,130,.55)');
+      x.fillStyle = r > .975 ? '#F2FBF7' : (r > .90 ? 'rgba(63,224,166,.85)' : 'rgba(47,185,138,.55)');
       x.fillText(ch, i*fs, y);
       ypos[i] = (ypos[i]*fs > c.height && Math.random() > .975) ? 0 : ypos[i] + 1;
     }

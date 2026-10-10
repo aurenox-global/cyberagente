@@ -1,0 +1,4 @@
+#Sat Oct 10 12:50:57 CEST 2026
+base.0=/home/zota/cyberagent-repo/app/build/intermediates/dex/release/mergeDexRelease/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

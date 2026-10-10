@@ -34,6 +34,11 @@ object AutoDefense {
             actions += permChanges.size
             sb.append("Permisos sensibles modificados en ${permChanges.size} app(s).\n")
         }
+        val sigChanges = SignatureWatcher.diff(ctx)
+        if (sigChanges.isNotEmpty()) {
+            actions += sigChanges.size
+            sb.append("Firma cambiada en ${sigChanges.size} app(s) (posible repackaging).\n")
+        }
 
         // ── 1. Apps ──────────────────────────────────────────────────
         val apps = AppAnalyzer.analyzeAll(ctx)

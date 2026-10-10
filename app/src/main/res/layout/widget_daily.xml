@@ -3,13 +3,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="#050A10">
+    android:background="#0A100E">
 
     <TextView
         android:id="@+id/w_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#00FFD6"
+        android:textColor="#3FE0A6"
         android:textSize="10sp"
         android:letterSpacing="0.12"
         android:text="RED · 7 DÍAS" />
@@ -26,7 +26,7 @@
         android:id="@+id/w_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#8FB3BF"
+        android:textColor="#9AA8A2"
         android:textSize="10sp"
         android:text="0 MB" />
 </LinearLayout>

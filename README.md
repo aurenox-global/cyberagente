@@ -2,7 +2,7 @@
 
 ### Consola de ciberdefensa local para Android
 
-[![Release](https://img.shields.io/badge/release-v2.5.1-00FFD6?style=flat-square&labelColor=03060A)](https://github.com/aurenox-global/cyberagente/releases)
+[![Release](https://img.shields.io/badge/release-v2.6.0-00FFD6?style=flat-square&labelColor=03060A)](https://github.com/aurenox-global/cyberagente/releases)
 [![Android](https://img.shields.io/badge/android-8.0%2B%20(API%2026)-8FB3BF?style=flat-square&labelColor=03060A)](#-instalación)
 [![Telemetría](https://img.shields.io/badge/telemetría-0-00FF88?style=flat-square&labelColor=03060A)](#-privacidad)
 [![Licencia](https://img.shields.io/badge/licencia-open%20source-3DA9FF?style=flat-square&labelColor=03060A)](./LICENSE)
@@ -46,6 +46,24 @@ Extra: **asistente defensivo local** (ciclo Observar → Analizar → Recomendar
 referencia MITRE ATT&CK), **autodiagnóstico de 10 comprobaciones**, **informe HTML forense**,
 **exportación JSON** y **copia de seguridad cifrada** (AES-256-GCM + PBKDF2).
 
+### Novedades de la v2.6.0
+
+- **Nuevo look (soft dark + menta)**: paleta renovada, tarjetas redondeadas, fondo con
+  resplandor y tipografía mixta (títulos en sans, datos en monoespaciada).
+- **Panel con pestañas de navegador**: Inicio · Módulos · Acciones · Eventos. La cabecera y las
+  pestañas quedan **fijas**; solo hace scroll el contenido entre las pestañas y el dock.
+- **Iconos vectoriales propios** (trazo 24×24, tintables): fuera los emoji de la interfaz.
+- **Motor de riesgo rebalanceado (menos falsos positivos)**: el riesgo son permisos *con tope* +
+  señales de postura (sideload, APK debuggable, targetSdk antiguo, combinaciones anómalas como
+  overlay+accesibilidad o SMS+Internet, app oculta, suplantación de marca y de banca) − amortiguadores
+  (tienda oficial, targetSdk moderno, firma de confianza). Antes cualquier app con muchos permisos
+  legítimos llegaba a «100/100 crítico».
+- **Vigilante de firma**: avisa si una actualización **cambia el firmante** de una app (repackage).
+- **Reputación de firma** y **whitelist por firma** (marcar un desarrollador de confianza).
+- **IoC integrado en el score**: si el hash del APK está en la lista de indicadores, pasa a crítico.
+- Correcciones: RDAP ya no hace red en el hilo principal; el cortafuegos desactiva su estado si no
+  hay apps que bloquear; análisis Wi-Fi en Android 8–12; filas de botones que ya no parten el texto.
+
 ### Novedades de la v2.5.1
 
 - **Widget 4×4** con escaneos, apps analizadas, cuarentena, alertas 24 h y **apps con tráfico
@@ -65,24 +83,24 @@ referencia MITRE ATT&CK), **autodiagnóstico de 10 comprobaciones**, **informe H
 ## 🚀 Instalación
 
 ```bash
-# APK v2.5.1 — Android 8.0+ (API 26) · ~4,5 MB
-curl -LO https://github.com/aurenox-global/cyberagente/releases/download/v2.5.1/CyberAgent_2.5.1.apk
+# APK v2.6.0 — Android 8.0+ (API 26) · ~4,5 MB
+curl -LO https://github.com/aurenox-global/cyberagente/releases/download/v2.6.0/CyberAgent_2.6.0.apk
 
 # Verifica el hash antes de instalar
-sha256sum CyberAgent_2.5.1.apk
+sha256sum CyberAgent_2.6.0.apk
 ```
 
 ```
-bf975e5184171fead3fb82e8429de5d140cf434c85e47dedaf0a250b24a35013
+86abd12641b0279aa29dc5a28422c5fd73c43f1b056d426ef3c8d5df34d1dbcb
 ```
 
-> Descarga oficial: [GitHub Releases](https://github.com/aurenox-global/cyberagente/releases/tag/v2.5.1).
+> Descarga oficial: [GitHub Releases](https://github.com/aurenox-global/cyberagente/releases/tag/v2.6.0).
 
 ### Verificación de la descarga
 
 ```
 Paquete      : com.cyberagent.app
-Versión      : 2.5.1 (versionCode 14)
+Versión      : 2.6.0 (versionCode 15)
 minSdk       : 26 · targetSdk/compileSdk 35
 Firma        : CN=CyberAgent Release, RSA 4096, esquemas v1 + v2 + v3
 debuggable   : false
@@ -199,7 +217,7 @@ app/src/main/java/com/cyberagent/app/
 
 ## 🛠️ Cambios respecto a la v2.0
 
-| v2.0 | v2.5.1 |
+| v2.0 | v2.6.0 |
 |------|--------|
 | Firma de depuración | Keystore propio RSA 4096, v1+v2+v3, no debuggable |
 | Accesibilidad con acceso total | Dos servicios: mínimo (sin leer contenido) + opcional anti-overlay |
@@ -232,4 +250,4 @@ No incluye capacidades ofensivas y el asistente rechaza generar contenido malici
 
 Open source (ver [`LICENSE`](./LICENSE)).
 
-`v2.5.1` · Android 8.0+ · 100 % local · 0 telemetría · **creado por Andrés Mag (Cuba)**
+`v2.6.0` · Android 8.0+ · 100 % local · 0 telemetría · **creado por Andrés Mag (Cuba)**
